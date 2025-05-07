@@ -1,0 +1,139 @@
+server:
+  port: ${ECOMMERCE_PORT}
+  error:
+    include-message: always
+spring:
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST}
+  cloud:
+    stream:
+      bindings:
+        inputIntegratorCallbackEvent:
+          content-type: application/json
+          destination: integratorCallbackEvent
+          group: ecommerce-system
+        outputIntegratorOrderRefundEvent:
+          content-type: application/json
+          destination: integratorOrderRefundEvent
+          group: ecommerce-system
+        outputOrderCommissionPayer:
+          content-type: application/json
+          destination: orderCommissionPayer
+          group: payment-system
+
+      kafka:
+        binder:
+          min-partition-count: 1
+          auto-add-partitions: true
+          brokers: ${KAFKA_HOST}
+          zkNodes: ${ZOOKEPER_HOST}
+  redis:
+    host: ${REDIS_HOST}
+  datasource:
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  database:
+    driverClassName: org.postgresql.Driver
+  jpa:
+    database: POSTGRESQL
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        cache:
+          use_second_level_cache: true
+          use_query_cache: true
+          region:
+            factory_class: "org.redisson.hibernate.RedissonRegionFactory"
+          redisson:
+            fallback: false
+            query:
+              expiration:
+                time_to_live: 300000
+            default:
+              expiration:
+                time_to_live: 300000
+            entity:
+              expiration:
+                time_to_live: 300000
+            EcommerceIntegrator:
+              expiration:
+                time_to_live: 900000
+    generate-dll: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}
+      client:
+        registration:
+          keycloak-service:
+            client-id: ${KEYCLOAK_INTERNAL_SERVICE_CLIENT_ID}
+            client-secret: ${KEYCLOAK_INTERNAL_SERVICE_CLIENT_SECRET}
+            authorization-grant-type: client_credentials
+            scope: openid
+        provider:
+          keycloak-service:
+            token-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}/protocol/openid-connect/token
+
+logging:
+  level:
+    org.hibernate.query.internal.AbstractProducedQuery: WARN
+    org.hibernate.orm.query: WARN
+    
+eureka:
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: ${EUREKA_HOST}
+  instance:
+    preferIpAddress: true
+
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'
+common:
+  uri: ${COMMON_URI}
+payment:
+  tiny-url:
+    token: ${TINY_URL_TOKEN}
+    url: ${TINY_URL_URL}
+    domain: ${TINY_DOMAIN}
+  uriForUserExists: ${PAYMENT_BASE_URI}/api/v1/user-account/exists/
+  uriForBranchExists: ${PAYMENT_BASE_URI}/api/v1/branch-account/exists/
+  uriForPaymentInitiation: ${URI_FOR_DIRECT_LINK}
+  uriForPaymentSaveCardInitiation: ${URI_FOR_DIRECT_LINK_SAVE_CARD}
+  uriForPaymentPayWithSavedCardInitiation: ${URI_FOR_DIRECT_LINK_PAY_WITH_SAVE_CARD}
+  uriForOpenBankingPaymentInitiation: ${URI_FOR_OB_DIRECT_LINK}
+  uriForCityPayPaymentInitiation: ${URI_FOR_CITYPAY_DIRECT_LINK}
+  uriForInstallmentInitiation: ${URI_FOR_INSTALLMENT_DIRECT_LINK}
+  uriForOpenBankingConsentCreate: ${URI_FOR_CONSENT_DIRECT_LINK}
+
+  uri: ${PAYMENT_URI}
+  base_uri: ${PAYMENT_BASE_URI}
+  integrator:
+    order:
+      expires-in-seconds: ${ORDER_EXPIRES_IN_SECONDS}
+      time-to-live-in-seconds: ${ORDER_TIME_TO_LIVE_IN_REDIS}
+    qr:
+      base-url: ${PAYMENT_INTEGRATOR_QR_BASE_URL}
+  fraud-analyzer:
+    uri: ${FRAUD_ANALYZER_URI}
+  currency-rate-url: ${NBG_CURRENCY_URL:https://nbg.gov.ge/gw/api/ct/monetarypolicy/currencies/ka/json/}
+  bog-currency-rate-url: ${BOG_CURRENCY_URL:https://api.businessonline.ge/api/rates/nbg/}
+
+rs:
+  username: ${RS_USERNAME}
+  password: ${RS_PASSWORD}
+  service-uri: https://webservices.rs.ge/PayService/PayService.asmx
+  get-payment-soap-action: http://www.mof.ge/webservices/payservice/GetPayment
+  payment-confirmation-soap-action: http://www.mof.ge/webservices/payservice/Payment

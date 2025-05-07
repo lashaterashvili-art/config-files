@@ -1,0 +1,36 @@
+KAFKA_HOST: localhost:12092
+ZOOKEPER_HOST:  localhost:2181
+ZIPKIN_HOST: localhost:9411
+LOGSTASH_HOST: localhost:5000
+
+REALM: sweeft
+KEYCLOAK_HOST: http://localhost:8081
+KEYCLOAK_ADMIN_USER: admin
+KEYCLOAK_ADMIN_PASSWORD: admin
+KEYCLOAK_CLIENT: sweeft-api-gateway
+KEYCLOAK_SECRET: 006e7440-b424-4670-9f49-66e725cfe7a7
+KEYCLOAK_INTERNAL_SERVICE_CLIENT_ID: sweeft-internal-service
+KEYCLOAK_INTERNAL_SERVICE_CLIENT_SECRET: 4ed1c1ca-fd1a-48e5-b083-3c69e3200958
+
+PAYMENT_GET_PROMOTION_PARAM_URL: http://localhost:8888/payment-service/api/v1/promotion/param
+DISTRIBUTOR_GIFT_DEPOSIT_URL: http://localhost:8888/payment-service/api/v1/distributor-gift/deposit
+USED_CAMPAIGN_STATUS_UPDATE: http://localhost:8888/payment-service/api/v1/distributor-gift/status
+
+
+
+ELASTIC_HOST: localhost
+ELASTIC_URI: localhost:9200
+EUREKA_HOST: http://localhost:8070/eureka
+
+LIMIT_HOST: https://appdev.keepz.me:9000
+
+SOCIAL_PORT: 8090
+
+POSTGRES_URL: jdbc:postgresql://localhost:5433/social?currentSchema=social
+POSTGRES_USER: sweeft
+POSTGRES_PASSWORD: sweeft
+PAYMENT_URI: http://localhost:8888/payment-service
+QUARTZ_INITIALIZE_SCHEMA: always
+CASHBACK_TIME_UNIT: MINUTE
+CASHBACK_TIME: 10
+

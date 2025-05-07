@@ -1,0 +1,148 @@
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: always
+    include-exception: true
+  port:  ${GATEWAY_PORT}
+spring:
+  mvc:
+    log-resolved-exception: true
+  cloud:
+    gateway:
+#      default-filters:
+#        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+#      globalcors:
+#        corsConfigurations:
+#          '[/**]':
+#            allowedOriginPatterns: '*'
+#            allowedHeaders: '*'
+#            allowedMethods: '*'
+      routes:
+        - id: ecommerce-service
+          uri: ${ECOMMERCE_SERVICE_URI:http://localhost:8989}
+          predicates:
+            - Path=/ecommerce-service/**
+          filters:
+            - StripPrefix=1
+        - id: fraud-analyzer-service
+            #          uri: http://wallet-dev.sweeftdigital.com:8051
+          uri: ${FRAUD_ANALYZER_SERVICE_URI:http://localhost:8061}
+            #          uri: lb://common-service
+          predicates:
+              - Path=/fraud-analyzer-service/**
+          filters:
+              - StripPrefix=1
+          #            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+        - id: common-service
+#          uri: http://wallet-dev.sweeftdigital.com:8051
+          uri: ${COMMON_SERVICE_URI:http://localhost:8051}
+#          uri: lb://common-service
+          predicates:
+            - Path=/common-service/**
+          filters:
+            - StripPrefix=1
+#            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+        - id: filemanager-service
+#          uri: lb://filemanager-service
+#          uri: http://wallet-dev.sweeftdigital.com:8031
+          uri: ${FILEMANAGER_SERVICE_URI:http://localhost:8031}
+          predicates:
+            - Path=/filemanager-service/**
+          filters:
+            - StripPrefix=1
+#            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+        - id: social-service
+#          uri: lb://social-service
+#          uri: http://wallet-dev.sweeftdigital.com:8090
+          uri: ${SOCIAL_SERVICE_URI:http://localhost:8090}
+          predicates:
+            - Path=/social-service/**
+          filters:
+            - StripPrefix=1
+#            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+        - id: payment-service
+#         uri: lb://payment-service
+#          uri: http://wallet-dev.sweeftdigital.com:8060
+          uri: ${PAYMENT_SERVICE_URI:http://localhost:8060}
+          predicates:
+            - Path=/payment-service/**
+          filters:
+            - StripPrefix=1
+#            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+          metadata:
+            cors-config:
+              allowedOrigins: "*"
+              allowedMethods: "*"
+              allowedHeaders: "*"
+        - id: notification-service
+#          uri: lb://notification-service
+#          uri: http://wallet-dev.sweeftdigital.com:8032
+          uri: ${NOTIFICATION_SERVICE_URI:http://localhost:8032}
+          predicates:
+            - Path=/notification-service/**
+          filters:
+            - StripPrefix=1
+#            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+          discovery:
+            locator:
+              lower-case-service-id: true
+              enabled: true
+              url-expression: "uri"
+
+    loadbalancer:
+      ribbon:
+        enabled: true
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            token-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}/protocol/openid-connect/token
+            authorization-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}/protocol/openid-connect/auth
+            user-info-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}/protocol/openid-connect/userinfo
+            jwk-set-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}/protocol/openid-connect/token_keys
+            user-name-attribute: preferred_username
+        registration:
+          keycloak-user:
+            provider: keycloak
+            client-id: ${KEYCLOAK_CLIENT_ID}
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: ${EUREKA_HOST}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+springdoc:
+  swagger-ui:
+    urls:
+      - name: common-service
+        url: /common-service/v3/api-docs
+      - name: fraud-analyzer-service
+        url: /fraud-analyzer-service/v3/api-docs
+      - name: filemanager-service
+        url: /filemanager-service/v3/api-docs
+      - name: social-service
+        url: /social-service/v3/api-docs
+      - name: payment-service
+        url: /payment-service/v3/api-docs
+      - name: notification-service
+        url: /notification-service/v3/api-docs
+      - name: ecommerce-service
+        url: /ecommerce-service/v3/api-docs
+#logging.level:
+#  org.springframework.cloud.gateway: WARN
+#  org.springframework.security: WARN
+#  org.springframework.web.reactive.function.client: TRACE

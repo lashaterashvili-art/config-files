@@ -1,0 +1,141 @@
+server:
+  port: ${SOCIAL_PORT}
+  error:
+    include-message: always
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  quartz:
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: ${QUARTZ_INITIALIZE_SCHEMA}
+    properties:
+      org:
+        quartz:
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            dataSource: quartzDataSource
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+            tablePrefix: social
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}
+      client:
+        registration:
+          keycloak-service:
+            client-id: ${KEYCLOAK_INTERNAL_SERVICE_CLIENT_ID}
+            client-secret: ${KEYCLOAK_INTERNAL_SERVICE_CLIENT_SECRET}
+            authorization-grant-type: client_credentials
+            scope: openid
+        provider:
+          keycloak-service:
+            token-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}/protocol/openid-connect/token
+  redis:
+    host: ${REDIS_HOST}
+  mvc:
+    log-resolved-exception: true
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    stream:
+      bindings:
+        inputSocialFeed:
+          content-type: application/json
+          destination: socialFeed
+          group: payment-system
+        inputSocialUser:
+          content-type: application/json
+          destination: socialUser #kafka on production
+          group: payment-system
+        outputNotification:
+          content-type: application/json
+          destination: notification
+          group: payment-system
+      kafka:
+        binder:
+          brokers: ${KAFKA_HOST} #kafka on production
+          zkNodes: ${ZOOKEPER_HOST} #kafka on production
+  zipkin:
+    base-url: ${ZIPKIN_HOST}
+  elasticsearch:
+    rest:
+      uris: ${ELASTIC_URI}
+      password: ${ELASTIC_PASSWORD}
+      username: ${ELASTIC_USERNAME}
+  data:
+    elasticsearch:
+      client:
+        reactive:
+          endpoints: ${ELASTIC_HOST}
+          password: ${ELASTIC_PASSWORD}
+          username: ${ELASTIC_USERNAME}
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /v2/api-docs
+keycloak:
+  realm: ${REALM}
+  auth-server-url: ${KEYCLOAK_HOST}/auth
+  resource: ${KEYCLOAK_CLIENT}
+  public-client: true
+
+auth:
+  server:
+    admin:
+      user: ${KEYCLOAK_ADMIN_USER}
+      password: ${KEYCLOAK_ADMIN_PASSWORD}
+payment:
+  base_uri: ${PAYMENT_URI}
+  get_promotion_param_url: ${PAYMENT_GET_PROMOTION_PARAM_URL}
+  distributor_gift_deposit_url: ${DISTRIBUTOR_GIFT_DEPOSIT_URL}
+  used_campaign_status_update_url: ${USED_CAMPAIGN_STATUS_UPDATE}
+
+social:
+  quartz:
+    cashback-time-unit: ${CASHBACK_TIME_UNIT}
+    cashback-time: ${CASHBACK_TIME}
+  gif-key: MbL6qE1Dbelk3MtyvqhDnt76PStbAJTH
+  commonFetchUsersUri: ${COMMON_SERVICE_URI}/api/v1/profile/get/multiple/users
+  keycloak:
+    token-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}/protocol/openid-connect/token
+    authorization-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}/protocol/openid-connect/auth
+    client-id: ${KEYCLOAK_CLIENT}
+    client-secret: ${KEYCLOAK_SECRET}
+  feed:
+    comment-reply: 5
+  limit:
+    check-limit: ${LIMIT_HOST}/api/OneStepTransactions
+    reset-limit: ${LIMIT_HOST}/api/TransactionReset
+  gift:
+    message-text-format: "Congratulations! You are our %s th transaction,\n here’s your exclusive voucher code: %s.\n Redeem it now and enjoy."
+eureka:
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: ${EUREKA_HOST}
+  instance:
+    preferIpAddress: true
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'
+

@@ -1,0 +1,98 @@
+server:
+  error:
+    include-message: always
+  port: ${FRAUD_ANALYZER_PORT}
+spring:
+  kafka:
+    bootstrap-servers: ${KF_HOST}
+  mvc:
+    log-resolved-exception: true
+  servlet:
+    multipart:
+      resolve-lazily: true
+      maxFileSize: 10MB
+      maxRequestSize: 10MB
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    stream:
+      bindings:
+        inputFraudAnalyzer:
+          content-type: application/json
+          destination: fraudAnalyzer
+          group: fraud-analyzer-system
+        inputUserEntity:
+          content-type: application/json
+          destination: userEntity
+          group: fraud-analyzer-system
+        outputBlockUser:
+          content-type: application/json
+          destination: blockUser
+          group: payment-system
+        outputNotification:
+          content-type: application/json
+          destination: notification
+          group: payment-system
+        inputDeactivateReceivedAmount:
+          content-type: application/json
+          destination: deactivateReceivedAmount
+          group: payment-system
+      kafka:
+        binder:
+          brokers: ${KAFKA_HOST} #kafka on production
+          zkNodes: ${ZOOKEPER_HOST} #kafka on production
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}
+      client:
+        registration:
+          keycloak-service:
+            client-id: ${KEYCLOAK_INTERNAL_SERVICE_CLIENT_ID}
+            client-secret: ${KEYCLOAK_INTERNAL_SERVICE_CLIENT_SECRET}
+            authorization-grant-type: client_credentials
+            scope: openid
+        provider:
+          keycloak-service:
+            token-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}/protocol/openid-connect/token
+  redis:
+    host: ${REDIS_HOST}
+
+
+keycloak:
+  realm: ${REALM}
+  auth-server-url: ${KEYCLOAK_HOST}/auth
+  resource: ${KEYCLOAK_CLIENT}
+  public-client: true
+eureka:
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: ${EUREKA_HOST}
+  instance:
+    ip-adress: ${SERVER_HOST}
+    preferIpAddress: true
+fraud:
+  sms-validity: 120
+  attempts-number: 5
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'

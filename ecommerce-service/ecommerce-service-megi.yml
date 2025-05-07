@@ -1,0 +1,30 @@
+ECOMMERCE_PORT: 8989
+KAFKA_HOST: localhost:12092
+ZOOKEPER_HOST: localhost
+REDIS_HOST: localhost
+POSTGRES_USER: sweeft
+POSTGRES_PASSWORD: sweeft
+POSTGRES_URL: jdbc:postgresql://localhost:5433/ecommerce
+REALM: sweeft
+KEYCLOAK_HOST: http://localhost:8081
+EUREKA_HOST: http://localhost:8070/eureka
+LOGSTASH_HOST: localhost:5000
+PAYMENT_URI: http://localhost:8888/payment-service/api/v1/branch-account
+PAYMENT_BASE_URI: http://localhost:8888/payment-service
+ORDER_EXPIRES_IN_SECONDS: 300
+ORDER_TIME_TO_LIVE_IN_REDIS: 480
+PAYMENT_INTEGRATOR_QR_BASE_URL: http://localhost:8060
+GATEWAY_HOST: http://localhost:8888
+
+FRAUD_ANALYZER_URI: http://localhost:8888/fraud-analyzer-service
+
+TINY_URL_TOKEN: DvblMDykOesEVamy3zNkSdJRIaLcWDVfzAiD97OSF5nPrp0qZ2rILzckTtJX
+TINY_URL_URL: https://api.tinyurl.com/create
+TINY_DOMAIN: tiny.dev.keepz.me
+COMMON_URI: http://localhost:8051
+URI_FOR_DIRECT_LINK: ${PAYMENT_BASE_URI}/api/transaction/pay/ecommerce
+URI_FOR_OB_DIRECT_LINK: ${PAYMENT_BASE_URI}/api/v1/open-banking/transaction/ecommerce
+URI_FOR_CITYPAY_DIRECT_LINK: ${PAYMENT_BASE_URI}/api/citypay/ecommerce
+
+RS_USERNAME: test
+RS_PASSWORD: test

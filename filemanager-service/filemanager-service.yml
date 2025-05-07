@@ -1,0 +1,114 @@
+spring:
+  kafka:
+    bootstrap-servers: ${KF_HOST}
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}
+      client:
+        registration:
+          keycloak-service:
+            client-id: ${KEYCLOAK_INTERNAL_SERVICE_CLIENT_ID}
+            client-secret: ${KEYCLOAK_INTERNAL_SERVICE_CLIENT_SECRET}
+            authorization-grant-type: client_credentials
+            scope: openid
+        provider:
+          keycloak-service:
+            token-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}/protocol/openid-connect/token
+  mvc:
+    log-resolved-exception: true
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    stream:
+      bindings:
+        inputFileManager:
+          content-type: application/json
+          destination: fileManager
+          group: payment-system
+        inputIdentomatBackup:
+          content-type: application/json
+          destination: identomatBackup
+          group: payment-system
+        inputSdaBackup:
+          content-type: application/json
+          destination: sdaBackup
+          group: payment-system
+      kafka:
+        binder:
+          brokers: ${KAFKA_HOST} #kafka on production
+          zkNodes: ${ZOOKEPER_HOST} #kafka on production
+eureka:
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: ${EUREKA_HOST}
+  instance:
+    preferIpAddress: true
+server:
+  port: ${FILEMANAGER_PORT}
+  error:
+    include-message: always
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'
+
+keycloak:
+  realm: ${REALM}
+  auth-server-url: ${KEYCLOAK_HOST}/auth
+  resource: ${KEYCLOAK_CLIENT}
+  public-client: true
+auth:
+  server:
+    admin:
+      user: ${KEYCLOAK_ADMIN_USER}
+      password: ${KEYCLOAK_ADMIN_PASSWORD}
+amazon:
+  credentials:
+    accessKey: ${AWS_ACC}
+    secretKey: ${AWS_SECRET}
+    accessKeyDoc: ${AWS_ACC_DOC}
+    secretKeyDoc: ${AWS_SECRET_DOC}
+  region: ${AWS_REGION}
+  s3:
+    endpoint: ${AWS_ENDPOINT}
+    bucketName: ${AWS_BUCKETNAME}
+    fakeMode: ${AWS_FAKEMODE}
+    endpoint-doc: ${AWS_ENDPOINT_DOC}
+    bucket-name-doc: ${AWS_BUCKET_NAME_DOC}
+filemanager:
+  keycloak:
+    token-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}/protocol/openid-connect/token
+    authorization-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}/protocol/openid-connect/auth
+    client-id: ${KEYCLOAK_CLIENT}
+    client-secret: ${KEYCLOAK_SECRET}
+  limit:
+    check-limit: ${LIMIT_HOST}/api/OneStepTransactions
+    reset-limit: ${LIMIT_HOST}/api/TransactionReset
+common:
+  identomat:
+    company-key: ${IDENTOMAT_COMPANY_KEY}
+    base-url: ${IDENTOMAT_BASE_URL}
+    external:
+      base-url: ${IDENTOMAT_EXTERNAL_BASE_URL}
+  sumsub:
+    base-url: ${SUMSUB_BASE_URL:https://api.sumsub.com}
+    secret-key: ${SUMSUB_SECRET_KEY:ko5AD0g0PnQZZ2ebPxHAj5f6Owba4Qar}
+    token: ${SUMSUB_TOKEN:prd:EQrSfiivpVKpEJ4o13vF3CoM.mhnG8CAyhqtd1NzI448KaOpUpqv3B91V}
+    level-name: ${SUMSUB_LEVEL_NAME:Dev}

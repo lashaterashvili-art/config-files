@@ -1,0 +1,70 @@
+KEYCLOAK_HOST: http://localhost:8081
+KEYCLOAK_ADMIN_USER: admin
+KEYCLOAK_ADMIN_PASSWORD: admin
+REALM: admin-panel
+KEYCLOAK_CLIENT: admin-panel-client
+KEYCLOAK_CLIENT_SECRET: 06ec2730-8dff-497d-983f-33133d7c6039
+KEYCLOAK_DEFAULT_PASSWORD: 6b2204336342fd50e397b57f0d44cb46b7a4731edf615d1f01345f18fe353dea
+
+KAFKA_HOST: localhost:12092
+
+POSTGRES_PASSWORD: sweeft
+POSTGRES_URL: jdbc:postgresql://localhost:5433/admin_panel
+POSTGRES_USER: sweeft
+REDIS_HOST: localhost
+
+FORGOT_PASSWORD_URI: http://localhost:5173/forgot-password
+
+SDA_URL: https://sda.keepz.me/send
+
+AWS_ACC: string
+AWS_SECRET: string
+AWS_REGION: eu-central-1
+AWS_ENDPOINT: string
+AWS_BUCKETNAME: string
+AWS_ENDPOINT_DOC: string
+AWS_BUCKET_NAME_DOC: string
+AWS_ACC_DOC: string
+AWS_SECRET_DOC: string
+S3_MAIN_FOLDER: string
+
+USER_PROFILE_IMAGE_BASE_URL: ${AWS_ENDPOINT}/sweeft-wallet/
+USER_DOCUMENT_BASE_URL: ${AWS_ENDPOINT_DOC}/keepz-dev-docs/
+MERCHANT_PROFILE_BASE_URL: ${AWS_ENDPOINT}/sweeft-wallet/
+MERCHANT_DOCUMENT_BASE_URL: ${AWS_ENDPOINT_DOC}/keepz-dev-docs/
+
+KEYCLOAK_HOST_ENV: ${KEYCLOAK_HOST}
+REALM_ENV: ${REALM}
+KEYCLOAK_CLIENT_ENV: ${KEYCLOAK_CLIENT}
+KEYCLOAK_CLIENT_SECRET_ENV: ${KEYCLOAK_CLIENT_SECRET}
+KEYCLOAK_ADMIN_USER_ENV: ${KEYCLOAK_ADMIN_USER}
+KEYCLOAK_ADMIN_PASSWORD_ENV: ${KEYCLOAK_ADMIN_PASSWORD}
+KEYCLOAK_DEFAULT_PASSWORD_ENV: ${KEYCLOAK_DEFAULT_PASSWORD}
+KEYCLOAK_ADMIN_MICROSERVICES_CLIENT: admin-panel-microservices-client
+KEYCLOAK_ADMIN_MICROSERVICES_SECRET: e51bb3f8-65f8-4bab-a505-f92ec738ec26
+MICROSERVICES_REALM: sweeft
+
+ECOMMERCE_URI: http://localhost:8888/ecommerce-service/
+PAYMENT_URI: http://localhost:8888/payment-service/
+FRAUD_ANALYZER_URI: http://localhost:8888/fraud-analyzer-service/
+DEFAULT_QR_URL: https://www.web.appdev.keepz.me/pay
+
+DISTRIBUTOR_HUB_URI: http://localhost:7897
+DISTRIBUTOR_HUB_CLIENT_ID: 1fe3e25a-045e-442b-a103-cce81fd0dcfc
+DISTRIBUTOR_HUB_CLIENT_SECRET: DU3oCAEPObem0i
+DISTRIBUTOR_HUB_GRANT_TYPE: client_credentials
+
+TINY_URL_TOKEN: DvblMDykOesEVamy3zNkSdJRIaLcWDVfzAiD97OSF5nPrp0qZ2rILzckTtJX
+TINY_URL_URL: https://api.tinyurl.com/create
+TINY_DOMAIN: tiny.dev.keepz.me
+
+ECOMMERCE_INTEGRATOR_ID: bbebab79-4b26-4c4a-986c-f802b643ad29
+
+IBAN_REVIEW_SUCCESS_MSG: ანგარიში {iban} დამატებულია და მონიშნულია ძირითად ანგარიშად
+IBAN_REVIEW_FAILED_MSG: ანგარიში {iban} უარყოფილია, სცადეთ სხვა ანგარიშის დამატება
+
+IBAN_REVIEW_SUCCESS_MSG_ENG: Your IBAN {iban} has been added and set as default
+IBAN_REVIEW_FAILED_MSG_ENG: Your IBAN {iban} has been rejected. Try other IBAN
+
+IBAN_REVIEW_SUCCESS_MSG_ITA: Il tuo IBAN {iban} è stato aggiunto e impostato come predefinito
+IBAN_REVIEW_FAILED_MSG_ITA: Il tuo IBAN {iban} è stato rifiutato. Prova un altro IBAN

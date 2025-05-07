@@ -1,0 +1,228 @@
+server:
+  error:
+    include-message: always
+  port: ${NOTIFICATION_PORT}
+spring:
+  kafka:
+    bootstrap-servers: ${KF_HOST}
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: noreply@keepz.me
+    password: fylvdnkdewhantxi
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+  second:
+    email:
+      default-encoding: UTF-8
+      host: smtp.gmail.com
+      port: 587
+      properties:
+        mail:
+          smtp:
+            starttls:
+              enable: true
+      username: keepzallerts@gmail.com
+      password: kabiqboghuwjhume
+  mvc:
+    log-resolved-exception: true
+  servlet:
+    multipart:
+      maxFileSize: 10MB
+      maxRequestSize: 10MB
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    stream:
+      bindings:
+        inputNotification:
+          content-type: application/json
+          destination: notification
+          group: payment-system
+        inputMobileDevice:
+          content-type: application/json
+          destination: mobileDevice
+          group: payment-system
+      kafka:
+        binder:
+          brokers: ${KAFKA_HOST} #kafka on production
+          zkNodes: ${ZOOKEPER_HOST} #kafka on production
+          consumer-properties:
+            session.timeout.ms: 10000
+            max.poll.interval.ms: 300000
+
+
+#  Solved it. This was the property required - spring.cloud.stream.kafka.streams.binder.functions.<channel>.configuration.session.timeout.ms –
+#  Pinaki
+#  Aug 2
+
+
+  datasource:
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}
+      client:
+        registration:
+          keycloak-service:
+            client-id: ${KEYCLOAK_INTERNAL_SERVICE_CLIENT_ID}
+            client-secret: ${KEYCLOAK_INTERNAL_SERVICE_CLIENT_SECRET}
+            authorization-grant-type: client_credentials
+            scope: openid
+        provider:
+          keycloak-service:
+            token-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}/protocol/openid-connect/token
+  redis:
+    host: ${REDIS_HOST}
+    time-to-live:
+      smsProviderConfigCache: 300000
+  elasticsearch:
+    rest:
+      uris: ${ELASTIC_URI}
+      password: ${ELASTIC_PASSWORD}
+      username: ${ELASTIC_USERNAME}
+  data:
+    elasticsearch:
+      client:
+        reactive:
+          endpoints: ${ELASTIC_HOST}
+          password: ${ELASTIC_PASSWORD}
+          username: ${ELASTIC_USERNAME}
+keycloak:
+  realm: ${REALM}
+  auth-server-url: ${KEYCLOAK_HOST}/auth
+  resource: ${KEYCLOAK_CLIENT}
+  public-client: true
+
+eureka:
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: ${EUREKA_HOST}
+  instance:
+    preferIpAddress: true
+
+auth:
+  admin:
+    username: ${KEYCLOAK_ADMIN_USER}
+    password: ${KEYCLOAK_ADMIN_PASSWORD}
+notification:
+  keycloak:
+    token-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}/protocol/openid-connect/token
+    authorization-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}/protocol/openid-connect/auth
+    client-id: ${KEYCLOAK_CLIENT}
+    client-secret: ${KEYCLOAK_SECRET}
+  limit:
+    check-limit: ${LIMIT_HOST}/api/OneStepTransactions
+    reset-limit: ${LIMIT_HOST}/api/TransactionReset
+custom:
+  integration:
+    push:
+      firebase:
+        server-key: ewogICAidHlwZSI6InNlcnZpY2VfYWNjb3VudCIsCiAgICJwcm9qZWN0X2lkIjoidGlwcHItY2IxOTciLAogICAicHJpdmF0ZV9rZXlfaWQiOiJiY2NhMjA3ZGU0MmU1ODgyNzE2MzAzMDEzZjhmOTBhODM1MzZlYTU1IiwKICAgInByaXZhdGVfa2V5IjoiLS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tXG5NSUlFdkFJQkFEQU5CZ2txaGtpRzl3MEJBUUVGQUFTQ0JLWXdnZ1NpQWdFQUFvSUJBUUNUUlFOWi9NbHZjbDlvXG4wNFp3SW1Gd2pIakgrVmtGbzdpdEFrcThGL0FFWmd6dWUwMm5ZYld4YWQzQ0lya0pMc3JEK25jM3l4czFDaWZSXG44VlRlL1Fwb25OaFVKTjk5VURFdXkvcEFFbE1abk1EcnhnMUp3L2hpQ1k3NS9ZZkJHU1VEZXEvNjkrSGxoZHUrXG5yNTRkVld1RmZYcUE2aGIwanp5ZWt1L2o1REs2bTRhL3V4V2R2VCtCNFQwdjIrUFdzYVdLeHp0eWUzSmlicjd6XG5SditrQ2lucklkWHZHNERMM3BXemdOUXhNekxvT2lXSjJCL2EyT2JYdmREUHVvKzJ1Q2VuUGhiRGJTLzlnVElCXG5FMlpKdWxQNUFlcG1qZEEvME5tVFhjSUpIT2V3TWJ5dWZ0aHRFZVI0RjNwK2M4ZHh6SWlaeVZndzFZQWlpM1p5XG5XaHF5TklkWEFnTUJBQUVDZ2dFQU9vZ3A2bGlodVFWRXJYV3d6NTJpaTZpUkVxM2tkMnpZYUE3cXBES0JaMFltXG5LcHpnUXIvL2htbDB4WVdtZEdOZ0hKOU9SZU1ZUjY3bkg3YWl6RlBYRUxnUjlQT0l6aFlTemk0dElzMEZzVDdQXG5vSVhoWHltZjdWc3VNK2JUejJnT2dZRUFNNmZVNVRRY0lBQk53QXZreGJRVy9lak1RZHd5TkRaaldQaW9QdWthXG5JVjlhZlI2dW15b3VobkpnTjNOTXhDZ3BLRXM0U202U3JJd2JSQi9vYmw3M1psbFJRYzBTbTFvWmQ3bTRmSTlwXG5hbmlQOGVTbmdTZ1U3UVljN3cwbEdVU3NhRERFWE1XeEdTdWFOeTNxcE55YmZRcWVzU1dGTEMyMllPak5qZ2N5XG5ReXFxNndhNUhCUEUxZ3BKY2tSa1A4amVjKy85UU9qcWczeGJCSVk2L1FLQmdRREo1cjllYmY2K2RKZHFTU1loXG5GYktLNW1YMjJ3VVhYMW1BVDgzVms3dlc0OGtoOG5uOHQycTVZTnJ0bk9BSXh0VDJ1RDZZaW4zbFhmVzZnTU9MXG53L0RLVE55TEI5UGNTZ3dFdDAxdmVSVlBaS0dOc1owS0VXaTV6b2lPZUVRTllId2E2V0tZQ1lxYTd1ZTQ2MVExXG5VT0V4VGtYL0pJTFFTYkxSZ0VxeVoyVVMrd0tCZ1FDNnV0aGljckp6MkNUOFlvQ0dVN0VvejFSMEs1K2wyaThzXG40ejJsaGZQanZjT0hMQXpDbkZMOXVza2Q3Ym1uNWk1czRVdXFYZGsvL3FjdnVtRyt3dG5OQnR6OXZ3UjJzR0xJXG40bmpYNXc1M1k4N1Nub0J1UGFoemtTckhwK2wrQlhXOFpwdW1FY1Z0K3hZMEpOWEJtbW1ENTBkdXpNSjdGSmhhXG5tZUlFRFBxT1ZRS0JnRU1LSkdiMWZRMitadng2dDNkcTNmTHpGODVFNFVibWVUQjZ6eXpvdGdsZmIweWZWOVFMXG5EeHZveGlqNTJ3WHZCNDI0bGNoT3pBamFEeHJUWUpySy8rd2NZMnFpdWIwK3RRam4ySVY0SGhSVHBMVUkwYzBqXG5CTFFWbVJBOWJOTklRMDBvUzMyU1JYeTJjU2pjc3dSVkM4RTBiVmVQeHdQa1JNVDlwVS9odHhUN0FvR0FXTHBSXG4rYTJ3bUJVN3RlV0VWcy9MM2ExdTN1aWZxcXBiUWtRVVZlT3B1U3pCalNoa1E5RU9LbHlvRmgyUTIzUW4yVHJRXG52bnByc2RucVRXYU43WndlN0NwM3RlY2ZVdHFMaGhML0F2QmEwbVpOcjR6N1QrYmlkVStrZVV5VFNYdUVyMm8rXG5TWkltTXhWZFBwZkdMb0dWNDhSeEQvZ2g3V1FpNU9JOElGcWVjQ1VDZ1lBWnNqam92V2o2QmFxNUtpQUxualRSXG4vd2Q5bHVEd0pQbFZpK0hnOWplZkFWOGl0eXptUTUzUGsrWVdVczduZE1NSEhUeVZ5L0t2eVRCeWhHQ2pTdzJtXG41dW8rOEMxN1Z3RWtaRkFoRmNqbDQ3bnVhaDhvUEh6cDVTWFFCeGJXSW4vb3lQbDJWdnhIT1Fsalkrb0FjMHZHXG44MFRtM0xiTzV6YWVzTk1kS2dlWFhnPT1cbi0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS1cbiIsCiAgICJjbGllbnRfZW1haWwiOiJmaXJlYmFzZS1hZG1pbnNkay10aGNvYkB0aXBwci1jYjE5Ny5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsCiAgICJjbGllbnRfaWQiOiIxMDc5MzcxOTM1MjI5NTc4MDY5OTEiLAogICAiYXV0aF91cmkiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20vby9vYXV0aDIvYXV0aCIsCiAgICJ0b2tlbl91cmkiOiJodHRwczovL29hdXRoMi5nb29nbGVhcGlzLmNvbS90b2tlbiIsCiAgICJhdXRoX3Byb3ZpZGVyX3g1MDlfY2VydF91cmwiOiJodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9vYXV0aDIvdjEvY2VydHMiLAogICAiY2xpZW50X3g1MDlfY2VydF91cmwiOiJodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9yb2JvdC92MS9tZXRhZGF0YS94NTA5L2ZpcmViYXNlLWFkbWluc2RrLXRoY29iJTQwdGlwcHItY2IxOTcuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLAogICAidW5pdmVyc2VfZG9tYWluIjoiZ29vZ2xlYXBpcy5jb20iCn0=
+        server-url: https://fcm.googleapis.com/fcm/send
+    sms:
+      georgian-provider:
+        url: http://smsco.ge/sec/sendsms.php?message=@{msg_content}&password=Tippr123$&recipient=@{mobile}&username=${SMS_PROVIDER_USERNAME}
+      global-provider-new:
+        username: keepzme
+        password: keepz!me2024
+        sendSmsUrl: http://91.208.144.41/~smsapi/keepzU.php
+        statusUrl: http://91.208.144.41/~smsapi/keepzU_status.php
+      global-provider:
+        url: https://rest.nexmo.com/sms/json
+        from: 18187944509
+        api-key: b1e2574799335d2a
+        api-secret: b1e2574799335d2a
+      uzbek-provider:
+        login: test
+        password: test
+        url: https://send.smsxabar.uz/broker-api/send
+      silknet:
+        sendSmsUrl: ${SILKNET_SMS_URL}
+        src_id: 17302217
+      infobip:
+        url: https://kq4wr1.api.infobip.com
+        api-key: 14a09c9a4bb40bbcabb358e27dd75271-7374d0ac-2e80-4c83-b05e-53a869d7fe17
+        sms-sender: InfoSMS
+        whatsapp-sender: 447860099299
+      whatsapp:
+        token: EAAIZBtYfcCVoBO8CXb8AOO9XKal4kL4ae9lmrG2Q7h8f9ojOFDffj2MAIwBINUGwDCWav54snx31PRITyBIZAxUKbq60JDConRNR8NPvZC73spkofG7yjoijkNUDeRMaxUyfZCv4sQQvlKCHWCENVq4a8RG1nd9ypQTDF7D3lPYqlYl1wxlJLIuA30gLEPjWNFh4YuTOIujD2iLhV4y9Wp3PRkZC1wRZAvfFc0vBcAsTQZD
+        url: https://graph.facebook.com/v22.0/586913917836799/messages
+      magticom:
+        baseUrl: http://81.95.160.47
+        username: keepz
+        password: feuxie7M
+        client_id: 885
+        service_id: 1
+      verimor:
+        url: https://sms.verimor.com.tr/v2/send
+        username: test
+        password: test
+        source: test
+    incoming:
+      api-key: B0wdsUnmb3mHpSB
+  #deprecated
+  static:
+    alarm-company-balance-not-enough-subject: Company balance alarm!!!
+    #email unsubscribe processor url
+    unsubscribe-url: http://${KAFKA_HOST}:8880//web/unsubscribe/@{userId}/@{hash}
+    #email templates resource url
+    email-templates-resource-url: https://s3.eu-central-1.amazonaws.com/sweeft-test/email/
+    #help center url for email templates
+    help-enter-url: https://sweeft.me
+    #survey url for email templates
+    survey-url: https://sweeft.me
+    #invite friends url for email templates
+    invite-friends-url: https://sweeft.me
+    #app url for email templates
+    app-url: https://sweeft.me
+    #email confirmation processor url
+    email-confirmation-url: http://${KAFKA_HOST}:8880/web/confirm/@{confirmToken}/@{hash}
+    #email from
+    email-from: noreply@keepz.me
+    alert-email-from: keepzallerts@gmail.com
+    info-email: sales@keepz.me
+    support-email: support@keepz.me
+    near-limit-email: ${NEAR_LIMIT_EMAIL:support@keepz.me}
+    distribution-email: ${DISTRIBUTION_EMAIL}
+    failed-acquiring-email: ${FAILED_ACQUIRING_EMAIL:support@keepz.me}
+    failed-refund: ${FAILED_REFUND_EMAIL:likakhokhiashvili@gmail.com}
+    notifications-email: ${NOTIFICATIONS_MAIL:notifications@keepz.me}
+    alerts-email : ${ALERTS_MAIL:alerts@keepz.me}
+    alert-sms-provider-disconnected-emails: "nik.tukhashvili@makingscience.com, zura.badzagua@makingscience.com, guga@keepz.me"
+    alert-proxy-disconnected-emails: "nik.tukhashvili@makingscience.com, zura.badzagua@makingscience.com, guga@keepz.me"
+    campaign:
+      email: ${CAMPAIGN_ALERT_EMAIL:keepzallerts@gmail.com}
+      alert-email-from: ${CAMPAIGN_ALERT_EMAIL_FROM:notifications@keepz.me}
+    device-disconnected-email: ${DEVICE_DISCONNECTED_EMAIL:sandro.mekoshkishvili@makingscience.com}
+    alert-foreign-currency-distribution: ${ALERT_FOREIGN_CURRENCY_DISTRIBUTION}
+    alert-general: ${GENERAL_ALERT}
+    alert-iban-review: ${ALERT_IBAN_REVIEW}
+    silknet-health-check-mobile: 591800593
+    silknet-health-check-country-code: 995
+    silknet-health-check-message: "Silknet health check sms"
+    silknet-health-check-execute: ${EXECUTE_SILKNET_HEALTH_CHECK}
+    monitor:
+      url: https://54.93.149.5
+      execute: ${MONITOR_URL_CHECK_EXECUTE}
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'

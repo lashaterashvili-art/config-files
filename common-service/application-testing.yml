@@ -1,0 +1,68 @@
+KAFKA_HOST: ${KF_HOST}
+ZOOKEPER_HOST: ${ZKPR_HOST}
+POSTGRES_USER: ${PG_USER}
+POSTGRES_PASSWORD: ${PG_PASSWORD}
+POSTGRES_URL: ${PG_URL}
+#LOGSTASH_HOST: develk.keepz.me:5000
+
+REALM: sweeft
+KEYCLOAK_HOST: ${KC_HOST}
+KEYCLOAK_ADMIN_USER: ${KC_ADMIN_USER}
+KEYCLOAK_ADMIN_PASSWORD: ${KC_ADMIN_PASSWORD}
+KEYCLOAK_CLIENT: ${KC_CLIENT}
+KEYCLOAK_SECRET: ${KC_SECRET}
+KEYCLOAK_INTERNAL_SERVICE_CLIENT_ID: sweeft-internal-service
+KEYCLOAK_INTERNAL_SERVICE_CLIENT_SECRET: e3c2a56a-8411-4926-86cc-478467a7484a
+MOBILE_KEYCLOAK_CLIENT: sweeft-api-gateway-mobile
+MOBILE_KEYCLOAK_SECRET: 979bbf9a-5d2e-4fb1-b02b-3b2926be10a9
+WEB_KEYCLOAK_CLIENT: sweeft-api-gateway-web
+WEB_KEYCLOAK_SECRET: 3f7450b9-5bce-4538-b6fb-658d1b892611
+KEYCLOAK_REDIRECT_URI: https://www.web.appdev.keepz.me/otp
+
+PAYMENT_URI: ${PAYMENT_SERVICE_URI:http://payment-service.dev.svc.cluster.local:8060}
+
+
+MERCHANT_REGISTRATION_CAMPAIGN_MSG_ENABLE: true
+USER_REGISTRATION_CAMPAIGN_MSG_ENABLE: true
+
+REDIS_HOST: ${RDS_HOST}
+ELASTIC_HOST: ${ES_HOST}
+ELASTIC_URI: ${ES_URI}
+ELASTICSEARCH_USERNAME: ${ES_USER}
+ELASTICSEARCH_PASSWORD: ${ES_PASSWORD}
+EUREKA_HOST: ${EURK_HOST}
+SERVER_HOST: ${SRV_HOST}
+SDA_URL: https://sda.keepz.me/send
+
+TINY_URL_TOKEN: ${TINY_URL_TKN}
+TINY_URL_URL: https://api.tinyurl.com/create
+TINY_DOMAIN: tiny.dev.keepz.me
+DOMAIN: web.appdev.keepz.me
+USER_GROUP_URL: ${PAYMENT_SERVICE_URI}/api/v1/user-account/{userId}/userGroup
+
+FRAUD_ANALYZER_URI: ${FRAUD_ANALYZER_SERVICE_URI}/api/v1/action
+FRAUD_ANALYZER_ACTIVATED: true
+
+IDENTOMAT_COMPANY_KEY: 6580b40d299edf612f00bf72_bf48a50e59ab4a065075485aaaf77dfb927daba2
+IDENTOMAT_BASE_URL: https://widget.identomat.com/external-api/
+IDENTOMAT_EXTERNAL_BASE_URL: https://external.api.identomat.com/
+
+URL_BASE: https://www.web.appdev.keepz.me/pay
+
+spring:
+  kafka:
+    bootstrap-servers: ${KF_HOST}
+  jpa:
+    #    show-sql: true
+    properties:
+      hibernate:
+        cache:
+          use_second_level_cache: true
+          use_query_cache: true
+          region:
+            factory_class: "org.redisson.hibernate.RedissonRegionFactory"
+          redisson:
+            fallback: false
+            entity:
+              expiration:
+                time_to_live: 300000

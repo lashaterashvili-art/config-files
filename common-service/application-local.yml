@@ -1,0 +1,80 @@
+KF_HOST: localhost:12092
+ZOOKEPER_HOST: localhost:2181
+POSTGRES_USER: sweeft
+POSTGRES_PASSWORD: sweeft
+POSTGRES_URL: jdbc:postgresql://localhost:5433/common
+#POSTGRES_URL: jdbc:postgresql://sweeftdigital-dev.clyaoowkzvwu.eu-central-1.rds.amazonaws.com:5432/sweeft_wallet?currentSchema=sweeft_wallet_common
+#POSTGRES_USER: sweeft_wallet_user
+#POSTGRES_PASSWORD: 4@zkfbG3aYGG#54
+#LOGSTASH_HOST: 3.64.251.107:5000
+COMMON_PORT: 8051
+
+REALM: sweeft
+KEYCLOAK_HOST: http://localhost:8081
+KEYCLOAK_ADMIN_USER: admin
+KEYCLOAK_ADMIN_PASSWORD: admin
+KEYCLOAK_CLIENT: sweeft-api-gateway
+KEYCLOAK_SECRET: 02ce8687-9bce-493c-bee9-81901527d573
+KEYCLOAK_INTERNAL_SERVICE_CLIENT_ID: sweeft-internal-service
+KEYCLOAK_INTERNAL_SERVICE_CLIENT_SECRET: 4ed1c1ca-fd1a-48e5-b083-3c69e3200958
+MOBILE_KEYCLOAK_CLIENT: sweeft-api-gateway-mobile
+MOBILE_KEYCLOAK_SECRET: ada9b54c-257b-4fd1-bb3f-bf5b6cf7452d
+WEB_KEYCLOAK_CLIENT: sweeft-api-gateway-web
+WEB_KEYCLOAK_SECRET: e14f501b-2c94-48bf-80cd-ed7ce213041a
+KEYCLOAK_REDIRECT_URI: https://www.web.appdev.keepz.me
+
+MERCHANT_REGISTRATION_CAMPAIGN_MSG_ENABLE: true
+USER_REGISTRATION_CAMPAIGN_MSG_ENABLE: true
+
+REDIS_HOST: localhost
+ELASTIC_HOST: localhost
+ELASTIC_URI: localhost:9200
+ELASTIC_USERNAME: elastic
+ELASTIC_PASSWORD: password
+EUREKA_HOST: http://localhost:8070/eureka
+LOGSTASH_HOST: localhost:5000
+
+LIMIT_HOST: https://appdev.keepz.me:9000
+KEEPZ_GET_USERS_URL: http://localhost:8088/api/user/all
+KEEPZ_GET_USER_URL: http://localhost:8088/api/user/migrate
+
+TINY_URL_TOKEN: DvblMDykOesEVamy3zNkSdJRIaLcWDVfzAiD97OSF5nPrp0qZ2rILzckTtJX
+TINY_URL_URL: https://api.tinyurl.com/create
+TINY_DOMAIN: tiny.dev.keepz.me
+DOMAIN: app.keepz.me
+
+USER_GROUP_URL: http://localhost:8888/payment-service/api/v1/user-account/{userId}/userGroup
+
+FRAUD_ANALYZER_URI: http://localhost:8888/fraud-analyzer-service/api/v1/action
+FRAUD_ANALYZER_ACTIVATED: false
+
+IDENTOMAT_COMPANY_KEY: 6580b40d299edf612f00bf72_bf48a50e59ab4a065075485aaaf77dfb927daba2
+IDENTOMAT_BASE_URL: https://widget.identomat.com/external-api/
+IDENTOMAT_EXTERNAL_BASE_URL: https://external.api.identomat.com/
+AWS_ACC: AKIA25EL2GQD57IOGTML
+AWS_SECRET: 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
+AWS_REGION: eu-central-1
+AWS_ENDPOINT: https://wallet-keepz-dev-s3.s3.eu-central-1.amazonaws.com
+APPLE_PASS_BASE_URL: https://wallet-keepz-dev-s3.s3.eu-central-1.amazonaws.com/apple_wallet_pass/
+PASS_CERTIFICATE_PASSWORD: 654321
+PASS_IDENTIFIER: pass.com.sweeftdigital.tipapp
+PASS_ORGANIZATION_NAME: FINGERPRINT FINANCE INC
+PASS_TEAM_ID: TAT2LGGYX9
+
+spring:
+  kafka:
+    bootstrap-servers: ${KF_HOST}
+  jpa:
+    #    show-sql: true
+    properties:
+      hibernate:
+        cache:
+          use_second_level_cache: true
+          use_query_cache: true
+          region:
+            factory_class: "org.redisson.hibernate.RedissonRegionFactory"
+          redisson:
+            fallback: false
+            entity:
+              expiration:
+                time_to_live: 300000

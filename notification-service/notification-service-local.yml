@@ -1,0 +1,44 @@
+
+REALM: sweeft
+KEYCLOAK_HOST: http://localhost:8081
+KEYCLOAK_ADMIN_USER: admin
+KEYCLOAK_ADMIN_PASSWORD: admin
+KEYCLOAK_CLIENT: sweeft-api-gateway
+KEYCLOAK_SECRET: 02ce8687-9bce-493c-bee9-81901527d573
+KEYCLOAK_INTERNAL_SERVICE_CLIENT_ID: sweeft-internal-service
+KEYCLOAK_INTERNAL_SERVICE_CLIENT_SECRET: 4ed1c1ca-fd1a-48e5-b083-3c69e3200958
+
+
+KF_HOST: localhost:12092
+ZOOKEPER_HOST:  localhost:2181
+EUREKA_HOST: http://localhost:8070/eureka
+LOGSTASH_HOST: localhost:5000
+
+POSTGRES_USER: sweeft
+POSTGRES_PASSWORD: sweeft
+POSTGRES_URL: jdbc:postgresql://localhost:5433/notification
+
+ELASTIC_HOST: localhost
+ELASTIC_URI: localhost:9200
+
+
+REDIS_HOST: localhost
+
+LIMIT_HOST: https://appdev.keepz.me:9000
+
+NOTIFICATION_PORT: 8032
+
+SMS_PROVIDER_USERNAME: 995558900291
+SILKNET_SMS_URL: http://91.151.128.64:7777/pls/sms/phttp2sms.Process
+
+DISTRIBUTION_EMAIL: "rusamatkava@gmail.com"
+FAILED_ACQUIRING_EMAIL: likakhokhiashvili@gmail.com
+FAILED_REFUND_EMAIL: likakhokhiashvili@gmail.com
+CAMPAIGN_ALERT_EMAIL_FROM: keepzallerts@gmail.com
+CAMPAIGN_ALERT_EMAIL: dev.notifications@keepz.me
+DEVICE_DISCONNECTED_EMAIL: sandro.mekoshkishvili@makingscience.com
+ALERT_FOREIGN_CURRENCY_DISTRIBUTION: lika.khokhiashvili@makingscience.com
+GENERAL_ALERT: dev.alerts@keepz.me
+ALERT_IBAN_REVIEW: dev.notifications@keepz.me
+EXECUTE_SILKNET_HEALTH_CHECK: false
+MONITOR_URL_CHECK_EXECUTE: false

@@ -1,0 +1,22 @@
+KAFKA_HOST: localhost:12092
+KF_HOST: localhost:12092
+ZOOKEPER_HOST: localhost
+POSTGRES_USER: sweeft
+POSTGRES_PASSWORD: sweeft
+POSTGRES_URL: jdbc:postgresql://localhost:5433/fraud
+LOGSTASH_HOST: localhost:5000
+FRAUD_ANALYZER_PORT: 8061
+
+REALM: sweeft
+KEYCLOAK_HOST: http://localhost:8081
+KEYCLOAK_ADMIN_USER: admin
+KEYCLOAK_ADMIN_PASSWORD: admin
+KEYCLOAK_CLIENT: sweeft-api-gateway
+KEYCLOAK_SECRET: 8c3472a7-7ae0-4d77-ace7-7aff3bef7024
+KEYCLOAK_INTERNAL_SERVICE_CLIENT_ID: sweeft-internal-service
+KEYCLOAK_INTERNAL_SERVICE_CLIENT_SECRET: 4ed1c1ca-fd1a-48e5-b083-3c69e3200958
+
+EUREKA_HOST: http://localhost:8070/eureka
+
+GATEWAY_HOST: http://localhost:8888
+REDIS_HOST: localhost

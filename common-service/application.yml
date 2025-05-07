@@ -1,0 +1,271 @@
+server:
+  error:
+    include-message: always
+  port: ${COMMON_PORT}
+spring:
+  kafka:
+    bootstrap-servers: ${KF_HOST}
+  mvc:
+    log-resolved-exception: true
+  servlet:
+    multipart:
+      resolve-lazily: true
+      maxFileSize: 10MB
+      maxRequestSize: 10MB
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        cache:
+          use_second_level_cache: true
+          use_query_cache: true
+          region:
+            factory_class: "org.redisson.hibernate.RedissonRegionFactory"
+          redisson:
+            fallback: false
+            entity:
+              expiration:
+                time_to_live: 300000
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+
+    stream:
+      bindings:
+        outputFraudAnalyzer:
+          content-type: application/json
+          destination: fraudAnalyzer
+          group: fraud-analyzer-system
+        outputUserEntity:
+          content-type: application/json
+          destination: userEntity
+          group: fraud-analyzer-system
+        inputBlockUser:
+          content-type: application/json
+          destination: blockUser
+          group: payment-system
+        outputBranchAccountCreateEvent:
+          content-type: application/json
+          destination: branchAccountCreateEvent
+          group: payment-system
+        outputPaymentUser:
+          content-type: application/json
+          destination: paymentUser
+          group: payment-system
+        outputPaymentUserImage:
+          content-type: application/json
+          destination: paymentUserImage
+          group: payment-system
+        outputNotification:
+          content-type: application/json
+          destination: notification
+          group: payment-system
+        outputSocialUser:
+          content-type: application/json
+          destination: socialUser
+          group: payment-system
+        outputFileManager:
+          content-type: application/json
+          destination: fileManager
+          group: payment-system
+        outputMobileDevice:
+          content-type: application/json
+          destination: mobile-device
+          group: payment-system
+        outputMerchantAccountCreateEvent:
+          content-type: application/json
+          destination: merchantAccountCreateEvent
+          group: payment-system
+        inputIntegratorUserCreateEvent:
+          content-type: application/json
+          destination: integratorUserCreateEvent
+          group: payment-system
+        outputVerifyUser:
+          content-type: application/json
+          destination: verifyUser
+          group: payment-system
+        outputIdentomatBackup:
+          content-type: application/json
+          destination: identomatBackup
+          group: payment-system
+        outputSdaBackup:
+          content-type: application/json
+          destination: sdaBackup
+          group: payment-system
+      kafka:
+        binder:
+          brokers: ${KAFKA_HOST} #kafka on production
+          zkNodes: ${ZOOKEPER_HOST} #kafka on production
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}
+      client:
+        registration:
+          keycloak-service:
+            client-id: ${KEYCLOAK_INTERNAL_SERVICE_CLIENT_ID}
+            client-secret: ${KEYCLOAK_INTERNAL_SERVICE_CLIENT_SECRET}
+            authorization-grant-type: client_credentials
+            scope: openid
+        provider:
+          keycloak-service:
+            token-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}/protocol/openid-connect/token
+  redis:
+    host: ${REDIS_HOST}
+  elasticsearch:
+    rest:
+      uris: ${ELASTIC_URI}
+      password: ${ELASTICSEARCH_PASSWORD}
+      username: ${ELASTICSEARCH_USERNAME}
+  data:
+    elasticsearch:
+      client:
+        reactive:
+          endpoints: ${ELASTIC_HOST}
+          password: ${ELASTICSEARCH_PASSWORD}
+          username: ${ELASTICSEARCH_USERNAME}
+
+keycloak:
+  realm: ${REALM}
+  auth-server-url: ${KEYCLOAK_HOST}/auth
+  resource: ${KEYCLOAK_CLIENT}
+  public-client: true
+eureka:
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: ${EUREKA_HOST}
+  instance:
+    ip-adress: ${SERVER_HOST}
+    preferIpAddress: true
+auth:
+  admin:
+    username: ${KEYCLOAK_ADMIN_USER}
+    password: ${KEYCLOAK_ADMIN_PASSWORD}
+common:
+  payment:
+    uri: ${PAYMENT_URI}
+  registration_msg: Gilocav! Shen ukve Keepz-is momxmarebeli xar. Gadadi linkze da gaige, rogor gamoikeneb mas. https://bit.ly/4bo2eSi
+  registration_msg_eng: Congratulations! You are now a Keepz user. Click on the link to learn how to use it. https://bit.ly/4bo2eSi
+  merchant:
+    registration:
+      campaign_msg_enable: ${MERCHANT_REGISTRATION_CAMPAIGN_MSG_ENABLE}
+      campaign_msg: გილოცავ შენ უკვე ქიფზის მომხმარებელი ხარ! სპეციალური შეთავაზება Keepz-ისგან – მხოლოდ აპრილში! მიიღე გადახდები უფასოდ Keepz-ის QR ტერმინალით და დასაჩუქრდი! 5₾ საჩუქრად – თუ მიიღებ ჯამში 30 ლარის 3 გადახდას 20₾ საჩუქრად – თუ მიიღებ ჯამში 100 ლარის 10 გადახდას ისარგებლე ქიფზის უფასო QR ტერმინალით და გაზარდე შენი შემოსავლები! გადადი ლინკზე და გაიგე როგორ გამოიყენებ ქიფზის აპლიკაციას! https://www.youtube.com/shorts/paMbxv7qIc0
+  user:
+    registration:
+      campaign_msg_enable: ${USER_REGISTRATION_CAMPAIGN_MSG_ENABLE}
+      campaign_msg: გილოცავ შენ უკვე ქიფზის მომხმარებელი ხარ! სპეციალური შეთავაზება Keepz-ისგან – მხოლოდ აპრილში! მიიღე გადახდები უფასოდ Keepz-ის QR ტერმინალით და დასაჩუქრდი! 5₾ საჩუქრად – თუ მიიღებ ჯამში 30 ლარის 3 გადახდას 20₾ საჩუქრად – თუ მიიღებ ჯამში 100 ლარის 10 გადახდას ისარგებლე ქიფზის უფასო QR ტერმინალით და გაზარდე შენი შემოსავლები! გადადი ლინკზე და გაიგე როგორ გამოიყენებ ქიფზის აპლიკაციას! https://www.youtube.com/shorts/JGc2LOpjeAM
+  user_group_url: ${USER_GROUP_URL}
+  sms-validity: 120
+  attempts-number: 5
+  password: Aa123456
+  sms-verification-validity: 3600
+  email-validity: 300
+  userProfileFolder: profile-images
+  sdaFolder: sda-images
+  keycloak:
+    token-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}/protocol/openid-connect/token
+    authorization-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}/protocol/openid-connect/auth
+    client-id: ${KEYCLOAK_CLIENT}
+    client-secret: ${KEYCLOAK_SECRET}
+    mobile_client-id: ${MOBILE_KEYCLOAK_CLIENT}
+    mobile_client-secret: ${MOBILE_KEYCLOAK_SECRET}
+    web_client-id: ${WEB_KEYCLOAK_CLIENT}
+    web_client-secret: ${WEB_KEYCLOAK_SECRET}
+    redirect-uri: ${KEYCLOAK_REDIRECT_URI}
+    realm: ${REALM}
+
+  recaptcha:
+    secret-key:
+      v2: 6LfWTBkrAAAAADxBkne4mbO3Jyq-AcZC0LaeaF6d
+      v3: 6LfzSxkrAAAAAMXKOxEHxeCfq2-WlZo8VTe-8pOS
+
+  limit:
+    base-url:
+      check-limit: ${LIMIT_HOST}/api/OneStepTransactions
+      reset-limit: ${LIMIT_HOST}/api/TransactionReset
+    endpoints:
+      sms-verification: /ValidateSMSVerification
+      sms-verification-reset: /ResetSMSVerificationAttempts
+      login: /ValidateLogin
+      login-reset: /ResetLoginAttempts
+      registration: /ValidateRegistration
+      registration-reset: /ResetRegistrationAttempts
+      incorrect-password: /ValidateIncorrectPassword
+      incorrect-password-reset: /ResetIncorrectPasswordAttempts
+      password-reset: /ValidatePasswordReset
+      password-reset-reset: /ResetPasswordResetAttempts
+  tiny-url:
+    token: ${TINY_URL_TOKEN}
+    url: ${TINY_URL_URL}
+    domain: ${TINY_DOMAIN}
+  web:
+    domain: ${DOMAIN}
+  fraud-analyzer:
+    uri: ${FRAUD_ANALYZER_URI}
+    activated: ${FRAUD_ANALYZER_ACTIVATED}
+  identomat:
+    company-key: ${IDENTOMAT_COMPANY_KEY}
+    base-url: ${IDENTOMAT_BASE_URL}
+    external:
+      base-url: ${IDENTOMAT_EXTERNAL_BASE_URL}
+  sumsub:
+    base-url: ${SUMSUB_BASE_URL:https://api.sumsub.com}
+    secret-key:  ${SUMSUB_SECRET_KEY:ko5AD0g0PnQZZ2ebPxHAj5f6Owba4Qar}
+    token:  ${SUMSUB_TOKEN:prd:EQrSfiivpVKpEJ4o13vF3CoM.mhnG8CAyhqtd1NzI448KaOpUpqv3B91V}
+    level-name: ${SUMSUB_LEVEL_NAME:Dev}
+  psda:
+    senderId: keepzme
+    value: Ko5123DQtSW0
+    documentSubcontractId: KeepzPersonInfo1
+    keyExchangeSubcontractId: KeepzKeyExchange1
+    url: ${SDA_URL}
+  nuvei:
+    token: FD5CKXRZwMTV3uJrfkfvCsZrForzcFK6Nmn.FD5CKXRaCp77hnhN8DDN9q8TRVQu9SosmRJ
+    base-url: https://sandbox.payaut.com
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'
+
+amazon:
+  credentials:
+    accessKey: ${AWS_ACC}
+    secretKey: ${AWS_SECRET}
+  s3:
+    endpoint: ${AWS_ENDPOINT}
+  region: ${AWS_REGION}
+  bucket:
+    apple: ${BUCKET_APPLE_PASS:applePass}
+  applePassBaseUrl: ${APPLE_PASS_BASE_URL}
+
+pass:
+  identifier: ${PASS_IDENTIFIER:pass.com.sweeftdigital.tipapp}
+  teamId: ${PASS_TEAM_ID:TAT2LGGYX9}
+  organizationName: ${PASS_ORGANIZATION_NAME:FINGERPRINT FINANCE INC}
+  certificatePass: ${PASS_CERTIFICATE_PASSWORD:654321}
+
+url:
+  base: ${URL_BASE:https://www.web.appdev.keepz.me/pay}
+
+
+
+temporary:
+  user:
+    password-length: 8
+    identifier-starting-value: 995600000000
+    key:
+      valid-until: 300

@@ -1,0 +1,58 @@
+KEYCLOAK_HOST_ENV: https://api.app.keepz.me:8080
+REALM_ENV: admin-panel
+KEYCLOAK_CLIENT_ENV: admin-panel-client
+KEYCLOAK_CLIENT_SECRET_ENV: c65f453d-a186-43bf-bfbe-8b44d1153302
+KEYCLOAK_ADMIN_USER_ENV: admin
+KEYCLOAK_ADMIN_PASSWORD_ENV: admin23#@
+KEYCLOAK_DEFAULT_PASSWORD_ENV: 6b2204336342fd50e397b57f0d44cb46b7a4731edf615d1f01345f18fe353dea
+KEYCLOAK_ADMIN_MICROSERVICES_CLIENT: admin-panel-microservices-client
+KEYCLOAK_ADMIN_MICROSERVICES_SECRET: b4f5619c-1afa-40e1-8ea8-b92df49b4b8d
+MICROSERVICES_REALM: sweeft
+
+KAFKA_HOST: ${KF_HOST}
+
+FORGOT_PASSWORD_URI: https://newdashboard.keepz.me/forgot-password
+
+SDA_URL: https://sda.keepz.me/send
+
+AWS_ACC: ${AWS_ACCE}
+AWS_SECRET: ${AWS_SEC}
+AWS_REGION: ${AWS_REG}
+AWS_ENDPOINT: ${AWS_END}
+AWS_BUCKETNAME: wallet-keepz-s3
+AWS_ENDPOINT_DOC: ${AWS_END_DOC}
+AWS_BUCKET_NAME_DOC: keepz-docs
+AWS_ACC_DOC: ${AWS_ACCE_DOC}
+AWS_SECRET_DOC: ${AWS_SEC_DOC}
+S3_MAIN_FOLDER: wallet-keepz-s3
+
+USER_PROFILE_IMAGE_BASE_URL: ${AWS_ENDPOINT}/wallet-keepz-s3/
+USER_DOCUMENT_BASE_URL: ${AWS_ENDPOINT_DOC}/keepz-docs/
+MERCHANT_PROFILE_BASE_URL: ${AWS_ENDPOINT}/wallet-keepz-s3/
+MERCHANT_DOCUMENT_BASE_URL: ${AWS_ENDPOINT_DOC}/keepz-docs/
+
+ECOMMERCE_URI: ${ECOMMERCE_SERVICE_URI}
+PAYMENT_URI: ${PAYMENT_SERVICE_URI:http://payment-service.prod.svc.cluster.local:8060}
+FRAUD_ANALYZER_URI: ${FRAUD_ANALYZER_SERVICE_URI:http://fraud-analyzer-service.prod.svc.cluster.local:9898}
+
+DISTRIBUTOR_HUB_URI: https://distributor.keepz.me
+DISTRIBUTOR_HUB_CLIENT_ID: d21a2801-e35d-4d8b-95ef-ffb17d7b3a94
+DISTRIBUTOR_HUB_CLIENT_SECRET: dRroD3Rduougrr
+DISTRIBUTOR_HUB_GRANT_TYPE: client_credentials
+
+DEFAULT_QR_URL: https://app.keepz.me/pay
+
+TINY_URL_TOKEN: DvblMDykOesEVamy3zNkSdJRIaLcWDVfzAiD97OSF5nPrp0qZ2rILzckTtJX
+TINY_URL_URL: https://api.tinyurl.com/create
+TINY_DOMAIN: tiny.keepz.me
+
+ECOMMERCE_INTEGRATOR_ID: e887ccc4-09a5-41a6-b67b-054bedb64ebc
+
+IBAN_REVIEW_SUCCESS_MSG: ანგარიში {iban} დამატებულია და მონიშნულია ძირითად ანგარიშად
+IBAN_REVIEW_FAILED_MSG: ანგარიში {iban} უარყოფილია, სცადეთ სხვა ანგარიშის დამატება
+
+IBAN_REVIEW_SUCCESS_MSG_ENG: Your IBAN {iban} has been added and set as default
+IBAN_REVIEW_FAILED_MSG_ENG: Your IBAN {iban} has been rejected. Try other IBAN
+
+IBAN_REVIEW_SUCCESS_MSG_ITA: Il tuo IBAN {iban} è stato aggiunto e impostato come predefinito
+IBAN_REVIEW_FAILED_MSG_ITA: Il tuo IBAN {iban} è stato rifiutato. Prova un altro IBAN

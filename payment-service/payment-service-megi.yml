@@ -1,0 +1,281 @@
+KF_HOST: localhost:12092
+ZOOKEPER_HOST: localhost
+POSTGRES_USER: sweeft
+POSTGRES_PASSWORD: sweeft
+POSTGRES_URL: jdbc:postgresql://localhost:5433/payment
+ZIPKIN_HOST: http://localhost:9411
+LOGSTASH_HOST: localhost:5000
+
+REALM: sweeft
+KEYCLOAK_HOST: http://localhost:8081
+KEYCLOAK_ADMIN_USER: admin
+KEYCLOAK_ADMIN_PASSWORD: admin
+KEYCLOAK_CLIENT: sweeft-api-gateway
+KEYCLOAK_SECRET: 8c3472a7-7ae0-4d77-ace7-7aff3bef7024
+
+ELASTIC_HOST: localhost
+ELASTIC_URI: localhost:9200
+EUREKA_HOST: http://localhost:8070/eureka
+
+GATEWAY_HOST: http://localhost:8888
+SWEEFT_BANK_ID: 1
+BENEFICIARY_BANK_CODE: BAGAGE22
+PAYMENT_PORT: 8060
+PAYZE_APIKEY: AF71940E9FAB4CD686D72B08432B5239
+PAYZE_FAIL_URL: https://corp:com/fail_url
+PAYZE_HOOK_URL: https://corp:com/payze_hook?authorization_token=token
+PAYZE_SECRETKEY: A62DF7CE67E9473E87C7EBCE60997B68
+PAYZE_SUCCESS_URL: https://corp:com/success_callback
+TBC_CLIENT_ID: IrHuO25nE9vJVUJ1YGk7BAfuPZqSmeu6
+TBC_CLIENT_SECRET: 0FFT1WFHfJvyMpMO
+
+REDIS_HOST: localhost
+#BOG_AUTH_URL: https://account.bog.ge/auth/realms/bog/protocol/openid-connect/token
+#BOG_API_URL: https://api.businessonline.ge
+#BOG_CLIENT_ID: 25b00d20-1384-4680-8464-5be5220b24f1
+#BOG_CLIENT_SECRET: 81dfb918-1ac6-4ba6-b5a9-f532658334ab
+
+BOG_AUTH_URL: https://account-test.bog.ge/auth/realms/bog-test/protocol/openid-connect/token
+BOG_API_URL: https://cib-api-staging.bog.ge
+BOG_CLIENT_ID: 425e8a6a-9a6e-4352-a2e9-5020bc4fe95b
+BOG_CLIENT_SECRET: b052ee55-7f9f-4e56-8ff3-42295ef21ae3
+BOG_KEEPZ_CLIENT_ID: 425e8a6a-9a6e-4352-a2e9-5020bc4fe95b
+BOG_KEEPZ_CLIENT_SECRET: b052ee55-7f9f-4e56-8ff3-42295ef21ae3
+
+
+TBC_AUTH_URL: https://test-api.tbcbank.ge/oauth/token
+
+LIMIT_HOST: https://appdev.keepz.me:9000
+
+#TEST ENVIRONMENT
+#TBC_DBI_USERNAME: "7489921_1"
+#TBC_DBI_PASSWORD: Aa123456
+#TBC_DBI_NONCE: 1111
+#TBC_DBI_URL: https://test.tbconline.ge/dbi/dbiService
+
+#REAL ENVIRONMENT (TEMPORARILY USED)
+TBC_DBI_USERNAME: "7901461_1"
+TBC_DBI_PASSWORD: THJU8KJU$
+TBC_DBI_NONCE: 1111
+TBC_DBI_URL: https://secdbi.tbconline.ge/dbi/dbiService
+TBC_CERTIFICATE_PATH: TBC_DBI_CERTIFICATE_BKN.pfx
+TBC_CERTIFICATE_PASSWORD: EuG83e1$
+
+TBC_DBI_USERNAME_KEEPZ: "GIORGIMARIAMIDZE405618915"
+TBC_DBI_PASSWORD_KEEPZ: TCa38YGC!45
+TBC_CERTIFICATE_PATH_KEEPZ: TBC_DBI_CERTIFICATE_KEEPZ.pfx
+TBC_CERTIFICATE_PASSWORD_KEEPZ: v\_6Jd;Y
+
+#OPEN BANKING
+COMMON_SSL_CERTIFICATE_PATH: KEEPZ_ME_QWAC.pfx
+COMMON_SSL_CERTIFICATE_PASSWORD: keepz123
+COMMON_SIGNATURE_CERTIFICATE_PATH: KEEPZ_ME_QSEAL.pfx
+COMMON_SIGNATURE_CERTIFICATE_PASSWORD: keepz123
+
+#OPEN BANKING - BOG
+BOG_SSL_CERTIFICATE_PATH: BOG_OB_QWAC.pfx
+BOG_SSL_CERTIFICATE_PASSWORD: bog-1234
+BOG_SIGNATURE_CERTIFICATE_PATH: BOG_OB_QSEAL.pfx
+BOG_SIGNATURE_CERTIFICATE_PASSWORD: bog-1234
+
+#OPEN BANKING - TBC
+TBC_SSL_CERTIFICATE_PATH: TBC_OB_QWAC.pfx
+TBC_SSL_CERTIFICATE_PASSWORD: AB13579C
+TBC_SIGNATURE_CERTIFICATE_PATH: TBC_OB_QSEAL.pfx
+TBC_SIGNATURE_CERTIFICATE_PASSWORD: AB13579C
+
+
+#PASSWORD: wsse
+TINY_URL_TOKEN: DvblMDykOesEVamy3zNkSdJRIaLcWDVfzAiD97OSF5nPrp0qZ2rILzckTtJX
+TINY_URL_URL: https://api.tinyurl.com/create
+TINY_DOMAIN: tiny.dev.keepz.me
+DOMAIN: app.keepz.me
+
+FRAUD_ANALYZER_URI: http://localhost:8888/fraud-analyzer-service
+FRAUD_ANALYZER_ACTIVATED: false
+
+CITYPAY_ACCESS_TOKEN: 3cf4f9f91d27766acdf8ea2ca544a05d
+CITYPAY_CUSTOMER_ID: 2634
+CITYPAY_ORDER_INFO_URL: https://v2-order-api.citypay.io/order/{ordertoken}/
+CITYPAY_ORDER_CREATE_URL: https://v2-listener.citypay.io/api/generateOrder
+COMMON_URI:
+
+CITYPAY_API_KEY: 88209e24018f5c4b19f30281dd571a3280c2afd9f9899ad564068dbaa283ec8c
+CITYPAY_API_SECRET: cd176ccee7d894ef36f66c23048ca1fa523d3103310c8c06e2afa2e9764607cf
+CITYPAY_CREATE_ORDER_URL: https://api.citypay.io/api/v1/application-orders
+CITYPAY_CREATE_MERCHANT_URL: https://api.citypay.io/api/v1/application-merchants
+CITYPAY_MERCHANT_IDENTIFIER: 93862532
+CITYPAY_GET_ORDER_DETAILS: https://api.citypay.io/api/v1/application-orders/
+CITYPAY_REDIRECT_URL: https://web.appdev.keepz.me/pay
+LIBERTY_CONFIRM_URL: https://my.libertybank.ge/api/transfer/v2/to-someone/confirm
+LIBERTY_CREATE_URL: https://my.libertybank.ge/api/transfer/v2/to-someone
+LIBERTY_STATUS_URL: https://my.libertybank.ge/api/currenttask/v1/corporate/get-current-task/
+
+UFC_SSL_CERTIFICATE_PATH: ecommerce_ufc_ge.p12
+UFC_SSL_CERTIFICATE_PASSWORD: c2UWQLG2dJQv4RvU
+UFC_ECOM_SSL_CERTIFICATE_PATH: ecommerce.ufc.ge_5303890.p12
+UFC_ECOM_SSL_CERTIFICATE_PASSWORD: CFSRgHfXaz1su2Xx
+UFC_ECOM_P2P_SSL_CERTIFICATE_PATH: ecommerce.ufc.ge_5303921.p12
+UFC_ECOM_P2P_SSL_CERTIFICATE_PASSWORD: BZUQubS6bvDU5sBv
+
+UFC_CREDO_SSL_CERTIFICATE_PATH: ecommerce.ufc.ge_5661001.p12
+UFC_CREDO_SSL_CERTIFICATE_PASSWORD: -EMB5dln9ptDIyL1
+UFC_CREDO_ECOM_SSL_CERTIFICATE_PATH: ecommerce.ufc.ge_5661001.p12
+UFC_CREDO_ECOM_SSL_CERTIFICATE_PASSWORD: -EMB5dln9ptDIyL1
+
+ECOMMERCE_URI: http://localhost:8989
+QR_BASE_URL: https://web.appdev.keepz.me/pay
+
+QUARTZ_INITIALIZE_SCHEMA: always
+
+NCI_SERVICE_URI: http://92.241.79.133:8080/nci/NCIServiceBean?wsdl
+UCC_SERVICE_URI: http://92.241.79.133:8080/ucc-services/UCCServicesBean?wsdl
+UCC_ENCRYPT_PROPERTIES: /ucc/test-encrypt.properties
+UCC_SIGN_PROPERTIES: /ucc/test-sign.properties
+
+FINA_SECURED_KEY: UNp5LsjzQ1wqO6TdYaDFeB8M7fmh35Uk
+FINA_SERVICE_URI: https://demo.emenu.ge
+
+custom:
+  request:
+    time-to-live: 300
+  sda:
+    key: 65801442a60ad02ff801c392_917e9ff7264f1791d6dc64890b2498ed5042a8fb
+    url: https://widget.identomat.com/external-api/begin
+  payze:
+    api-key: 0F76255523464ED58983E95AC17C1383
+    api-secret: 941CE9F4506144ADBEDD05591074A497
+    callback-url: https://gateway.dev.keepz.me/payment-service/api/payze/transaction/hook
+    fail-url: https://web.appdev.keepz.me/payment-failed
+    return-url: https://web.appdev.keepz.me/pending
+    success-url: https://web.appdev.keepz.me/success
+    request-url: https://payze.io/v2/api/payment
+    details-url: https://payze.io/v2/api/payment/query/token-based
+    refund-url: https://payze.io/v2/api/payment/refund
+  bog:
+    callback-url: https://ventis.me
+    fail-url: https://keepz.me/payment-failed
+    success-url: https://keepz.me/success
+    request-url: https://api.bog.ge/payments/v1/ecommerce/orders
+    request-with-card-url: https://api.bog.ge/payments/v1/ecommerce/orders/
+    save-card-url: https://api.bog.ge/payments/v1/orders/
+    token-url: https://oauth2.bog.ge/auth/realms/bog/protocol/openid-connect/token
+    details-url: https://api.bog.ge/payments/v1/receipt/
+    refund-url: https://api.bog.ge/payments/v1/payment/refund/
+    return-url: ${BOG_RETURN_URL:https://app.keepz.me/pending}
+    user: ${USER:ROY1I2TW974SUAPI}
+    password: ${PASSWORD:042J1XVPS3ZLE8R9WNUI}
+    new-user: ${USER:LBMZK08HQUIWOAPI}
+    new-password: ${PASSWORD:43RC9HN6D2A0BO57IKPG}
+    gc-history-url: ${GC_HISTORY_URL:https://mpi.gc.ge/open/api/v4/66EF9A2E6D429D8F0C767574F9353E8B/merchant/history/trx/}
+    start-session-url: ${START_SESSION_URL:https://mpi.gc.ge/open/api/v4/66EF9A2E6D429D8F0C767574F9353E8B/session/start}
+    mobile-start-session-url: ${MOBILE_START_SESSION_URL:https://mpi.gc.ge/open/api/v4/B017853764E36EB69E831F9B46880E61/session/start}
+    gc-token-url: ${GC_TOKEN_URL:https://mpi.gc.ge/open/api/v4/66EF9A2E6D429D8F0C767574F9353E8B/token}
+    gc-url: ${GC_URL:https://mpi.gc.ge/open/api/v4/66EF9A2E6D429D8F0C767574F9353E8B/payment/}
+    gc-refund-url: ${GC_REFUND_URL:https://mpi.gc.ge/open/api/v4/66EF9A2E6D429D8F0C767574F9353E8B/merchant/history/trx/}
+    mobile-gc-token-url: ${MOBILE_GC_TOKEN_URL:https://mpi.gc.ge/open/api/v4/B017853764E36EB69E831F9B46880E61/token}
+    mobile-gc-url: ${MOBILE_GC_URL:https://mpi.gc.ge/open/api/v4/B017853764E36EB69E831F9B46880E61/payment/}
+    mobile-gc-refund-url: ${MOBILE_GC_REFUND_URL:https://mpi.gc.ge/open/api/v4/B017853764E36EB69E831F9B46880E61/merchant/history/trx/}
+  tbc:
+    acquiring:
+      apikey: ${TBC_API_KEY:tUr4HkxIAeb8hXKQTC5lU0auvqWpqmLh}
+      client-id: ${TBC_WEB_CLIENT_ID:7001670}
+      client-secret: ${TBC_WEB_CLIENT_SECRET:kE7i1EvJPgukp2FJ}
+      token-url: https://api.tbcbank.ge/v1/tpay/access-token
+      request-url: https://api.tbcbank.ge/v1/tpay/payments
+      request-with-card-url: https://api.tbcbank.ge/v1/tpay/payments/execution
+      return-url: ${BOG_RETURN_URL:https://app.keepz.me/pending}
+      callback-url: https://appdev.keepz.me:8888/payment-service/api/tbc/transaction/hook
+      cancel-url: https://api.tbcbank.ge/v1/tpay/payments/{payId}/cancel
+      delete-saved-card-url: https://api.tbcbank.ge/v1/tpay/payments/{recId}/delete
+
+    ufc:
+      apple-pay-execute: https://keepzpaytbc.ufc.ge/applePay/sms/execute
+      google-pay-execute: https://keepzpaytbc.ufc.ge/ecomm/v1.0/payments
+      refund-url: https://keepzpaytbc.ufc.ge/ecomm/v1.0/payments/refund
+      reversal-url: https://keepzpaytbc.ufc.ge/ecomm/v1.0/payments/{id}/reversal
+      get-info-url: https://keepzpaytbc.ufc.ge/ecomm/v1.0/payments/{id}
+      google-pay-decrypt-url: https://keepzpaytbc.ufc.ge/googlepay/decrypt
+      ecom-url: https://ecommerce.ufc.ge:18443/ecomm2/MerchantHandler?
+      ecom-web-url: https://ecommerce.ufc.ge/ecomm2/ClientHandler
+      p2p-client-ip: 35.157.186.80
+      finish: https://keepzpaytbc.ufc.ge/ecomm/v1.0/payments/{id}/finish
+
+  credo:
+    ufc:
+      apple-pay-execute: https://test3ds.ufc.ge:8449/ecomm/v1.0/payments
+      google-pay-execute: https://test3ds.ufc.ge:8449/ecomm/v1.0/payments
+      refund-url: https://test3ds.ufc.ge:8449/ecomm/v1.0/payments/refund
+      reversal-url: https://test3ds.ufc.ge:8449/ecomm/v1.0/payments/{id}/reversal
+      get-info-url: https://test3ds.ufc.ge:8449/ecomm/v1.0/payments/{id}
+      google-pay-decrypt-url: https://test3ds.ufc.ge:8449/googlepay/decrypt
+      ecom-url: https://ecommerce.ufc.ge:18443/ecomm2/MerchantHandler?
+
+    installment:
+      merchant_id: 10112
+      password: kjebl2m
+      username: Keepz
+      auth-url: http://185.205.88.254:3848/api/User/Authenticate
+      get_status_url: https://185.205.88.254:8443/widget/api.php
+      create_order_url: https://185.205.88.254:8443/widget_api/order.php
+      cancel_url: https://185.205.88.254:8443/api/Shop/CancelInstallment
+      mark-as-delivered: https://185.205.88.254:8443/api/Shop/MarkAsDelivered
+      redirect-url: https://app.keepz.me/standard-pending
+
+    acquiring:
+      auth-url: https://ecommercegatewaytest.credo.ge:3848/connect/token
+      callback-url: https://gateway.dev.keepz.me/payment-service/api/credo/transaction/hook
+      client-id: keepz
+      client-secret: 135b7959-1e31-465a-b831-38a899c22d43
+      get-details-transactionId: https://ecommercegatewaytest.credo.ge:3848/ecomm/payments
+      merchant-id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+      request-url: https://ecommercegatewaytest.credo.ge:3848/ecomm/payments
+      return-url: https://app.keepz.me/standard-pending
+      reversal-url: https://ecommercegatewaytest.credo.ge:3848/ecomm/payments/reversal
+      refund-url: https://ecommercegateway.credo.ge/ecomm/payments/refund
+      scope: ecommerce-api
+
+  third-party:
+    reverse-url: https://testkeepzmeapi.credo.ge/mycredo-transfers/check-status/{id}
+    partially-reverse-url: https://testkeepzmeapi.credo.ge/mycredo-transfers/Reverse
+    check-status-url: https://testkeepzmeapi.credo.ge/mycredo-transfers/PartiallyReverse
+  mollie:
+    api-key: test_c2S2GxqAFSPEBHj6PdxHACWtHg4SMu
+    return-url: https://app.keepz.me/standard-pending
+    callback-url: https://gateway.dev.keepz.me/payment-service/api/mollie/transaction/hook
+  nuvei:
+    pay-url: https://ppp-test.safecharge.com/ppp/purchase.do
+    callback-url: https://gateway.dev.keepz.me/payment-service/api/nuvei/transaction/hook
+    fail-url: https://web.appdev.keepz.me/payment-failed
+    success-url: https://web.appdev.keepz.me/success
+    merchant-id: 283475
+    merchant-site-id: 89123755
+    merchant-secret: Secret123
+    pending-url: https://www.web.appdev.keepz.me/standard-pending
+    token: FD5CKXRZwMTV3uJrfkfvCsZrForzcFK6Nmn.FD5CKXRaCp77hnhN8DDN9q8TRVQu9SosmRJ
+    payout-base-url: https://sandbox.payaut.com
+  soft-pos:
+    secret-key: testSecretKey
+
+ECCOMERCE_URI: http://localhost:8989
+
+spring:
+  kafka:
+    bootstrap-servers: ${KF_HOST}
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+#    user: HA28Y6ZLJ5TNQ
+#    password: VMWTXY42UP6JRA8DQHI0
+#    start-session-url: https://mpi.gc.ge/open/api/v4/66EF9A2E6D429D8F0C767574F9353E8B/session/start
+#    mobile-start-session-url: https://mpi.gc.ge/open/api/v4/B017853764E36EB69E831F9B46880E61/session/start
+#    account-id: POS38074
+#    merchant-id: C8B5479FC2F620442A46
+#    gc-token-url: https://mpi.gc.ge/open/api/v4/66EF9A2E6D429D8F0C767574F9353E8B/token
+#    gc-url: https://mpi.gc.ge/open/api/v4/66EF9A2E6D429D8F0C767574F9353E8B/payment/
+#    gc-refund-url: https://mpi.gc.ge/open/api/v4/66EF9A2E6D429D8F0C767574F9353E8B/merchant/history/trx/
+#    mobile-gc-token-url: https://mpi.gc.ge/open/api/v4/B017853764E36EB69E831F9B46880E61/token
+#    mobile-gc-url: https://mpi.gc.ge/open/api/v4/B017853764E36EB69E831F9B46880E61/payment/
+#    mobile-gc-refund-url: https://mpi.gc.ge/open/api/v4/B017853764E36EB69E831F9B46880E61/merchant/history/trx/

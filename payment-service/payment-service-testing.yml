@@ -1,0 +1,361 @@
+KAFKA_HOST: ${KF_HOST}
+ZOOKEPER_HOST: ${ZKPR_HOST}
+POSTGRES_USER: ${PG_USER}
+POSTGRES_PASSWORD: ${PG_PASSWORD}
+POSTGRES_URL: ${PG_URL}
+ZIPKIN_HOST: ${ZPKN_HOST}
+#LOGSTASH_HOST: 3.64.251.107:5000
+REDIS_HOST: ${RDS_HOST}
+REALM: sweeft
+KEYCLOAK_HOST: ${KC_HOST}
+KEYCLOAK_ADMIN_USER: ${KC_ADMIN_USER}
+KEYCLOAK_ADMIN_PASSWORD: ${KC_ADMIN_PASSWORD}
+KEYCLOAK_CLIENT: ${KC_CLIENT}
+KEYCLOAK_SECRET: ${KC_SECRET}
+KEYCLOAK_INTERNAL_SERVICE_CLIENT_ID: sweeft-internal-service
+KEYCLOAK_INTERNAL_SERVICE_CLIENT_SECRET: e3c2a56a-8411-4926-86cc-478467a7484a
+
+EUREKA_HOST: ${EURK_HOST}
+
+ELASTIC_HOST: ${ES_HOST}
+ELASTIC_URI: ${ES_URI}
+ELASTIC_USERNAME: ${ES_USER}
+ELASTIC_PASSWORD: ${ES_PASSWORD}
+
+GATEWAY_HOST: ${GW_HOST}
+SWEEFT_BANK_ID: ${SWFT_BANK_ID}
+
+BOG_AUTH_URL: https://account.bog.ge/auth/realms/bog/protocol/openid-connect/token
+BOG_API_URL: https://api.businessonline.ge
+#BOG_CLIENT_ID: 25b00d20-1384-4680-8464-5be5220b24f1
+#BOG_CLIENT_SECRET: 81dfb918-1ac6-4ba6-b5a9-f532658334ab
+BOG_KEEPZ_CLIENT_ID: e07f74c4-f910-455c-bc02-8f457395ab68
+BOG_KEEPZ_CLIENT_SECRET: e1e8cbf5-dcea-4b8e-b04d-ab516f9f9edc
+
+TBC_AUTH_URL: https://test-api.tbcbank.ge/oauth/token
+
+LIMIT_HOST: https://appdev.keepz.me:9000
+
+TBC_DBI_USERNAME: "7901461_1"
+TBC_DBI_PASSWORD: THJU8KJU$
+TBC_DBI_NONCE: 1111
+TBC_DBI_URL: https://secdbi.tbconline.ge/dbi/dbiService
+TBC_CERTIFICATE_PATH: TBC_DBI_CERTIFICATE_BKN.pfx
+TBC_CERTIFICATE_PASSWORD: EuG83e1$
+
+TBC_DBI_USERNAME_KEEPZ: "GIORGIMARIAMIDZE405618915"
+TBC_DBI_PASSWORD_KEEPZ: TCa38YGC!78
+TBC_CERTIFICATE_PATH_KEEPZ: TBC_DBI_CERTIFICATE_KEEPZ.pfx
+TBC_CERTIFICATE_PASSWORD_KEEPZ: v\_6Jd;Y
+
+#OPEN BANKING
+COMMON_SSL_CERTIFICATE_PATH: OB_PROD_QWAC.pfx
+COMMON_SSL_CERTIFICATE_PASSWORD: ${QWAC_PASSWORD:test}
+COMMON_SIGNATURE_CERTIFICATE_PATH: OB_PROD_QSEAL.pfx
+COMMON_SIGNATURE_CERTIFICATE_PASSWORD: ${QSEAL_PASSWORD:test}
+TEST_COMMON_SSL_CERTIFICATE_PATH: KEEPZ_ME_QWAC.pfx
+TEST_COMMON_SSL_CERTIFICATE_PASSWORD: keepz123
+TEST_COMMON_SIGNATURE_CERTIFICATE_PATH: KEEPZ_ME_QSEAL.pfx
+TEST_COMMON_SIGNATURE_CERTIFICATE_PASSWORD: keepz123
+
+OB_JOB_INTERVAL : 3
+OB_PACT_INTERVAL: 240000
+OB_PACT_INTERVAL_SECOND_SCHEDULER: 3600000
+
+#OPEN BANKING - BOG
+BOG_SSL_CERTIFICATE_PATH: OB_PROD_QWAC.pfx
+BOG_SSL_CERTIFICATE_PASSWORD: ${QWAC_PASSWORD:test}
+BOG_SIGNATURE_CERTIFICATE_PATH: OB_PROD_QSEAL.pfx
+BOG_SIGNATURE_CERTIFICATE_PASSWORD: ${QSEAL_PASSWORD:test}
+
+#OPEN BANKING - TBC
+TBC_SSL_CERTIFICATE_PATH: OB_PROD_QWAC.pfx
+TBC_SSL_CERTIFICATE_PASSWORD: ${QWAC_PASSWORD:test}
+TBC_SIGNATURE_CERTIFICATE_PATH: OB_PROD_QSEAL.pfx
+TBC_SIGNATURE_CERTIFICATE_PASSWORD: ${QSEAL_PASSWORD:test}
+
+TINY_URL_TOKEN: ${TINY_URL_TKN}
+TINY_URL_URL: https://api.tinyurl.com/create
+TINY_DOMAIN: tiny.dev.keepz.me
+DOMAIN: web.appdev.keepz.me
+#PASSWORD: wsse
+FRAUD_ANALYZER_URI: ${FRAUD_ANALYZER_SERVICE_URI}
+FRAUD_ANALYZER_ACTIVATED: true
+
+CITYPAY_ACCESS_TOKEN: 3cf4f9f91d27766acdf8ea2ca544a05d
+CITYPAY_CUSTOMER_ID: 2634
+CITYPAY_ORDER_INFO_URL: https://v2-order-api.citypay.io/order/{ordertoken}/
+CITYPAY_ORDER_CREATE_URL: https://v2-listener.citypay.io/api/generateOrder
+
+CITYPAY_API_KEY: 88209e24018f5c4b19f30281dd571a3280c2afd9f9899ad564068dbaa283ec8c
+CITYPAY_API_SECRET: cd176ccee7d894ef36f66c23048ca1fa523d3103310c8c06e2afa2e9764607cf
+CITYPAY_CREATE_ORDER_URL: https://api.citypay.io/api/v1/application-orders
+CITYPAY_CREATE_MERCHANT_URL: https://api.citypay.io/api/v1/application-merchants
+CITYPAY_MERCHANT_IDENTIFIER: 93862532
+CITYPAY_GET_ORDER_DETAILS: https://api.citypay.io/api/v1/application-orders/
+CITYPAY_REDIRECT_URL: https://www.web.appdev.keepz.me/standard-pending
+CITYPAY_REFUND_URL: https://api.citypay.io/api/v1/application-orders/refund
+CITYPAY_DIRECT_ORDER_URL: https://api.citypay.io/api/v1/direct-orders
+CITYPAY_API_KEY_DEV: 930a901ac5a7278127b6e7d92638eaeb3179179453ae41ebb4c01c1c810e5878
+CITYPAY_API_SECRET_DEV: 9ab0c5243b6003482ddacee59e97951e7f56d29b26cca2a0f098d6c3e1c39df4
+CITYPAY_MERCHANT_IDENTIFIER_DEV: 72435462
+CITYPAY_GET_DIRECT_ORDER_DETAILS: https://api.citypay.io/api/v1/direct-orders/
+CITYPAY_REFUND_MIN_AMOUNT: 3.0
+
+UFC_SSL_CERTIFICATE_PATH: ecommerce_ufc_ge.p12
+UFC_SSL_CERTIFICATE_PASSWORD: c2UWQLG2dJQv4RvU
+UFC_ECOM_SSL_CERTIFICATE_PATH: ecommerce.ufc.ge_5303890.p12
+UFC_ECOM_SSL_CERTIFICATE_PASSWORD: CFSRgHfXaz1su2Xx
+UFC_ECOM_P2P_SSL_CERTIFICATE_PATH: ecommerce.ufc.ge_5303921.p12
+UFC_ECOM_P2P_SSL_CERTIFICATE_PASSWORD: BZUQubS6bvDU5sBv
+
+UFC_CREDO_SSL_CERTIFICATE_PATH: ecommerce.ufc.ge_5661001.p12
+UFC_CREDO_SSL_CERTIFICATE_PASSWORD: -EMB5dln9ptDIyL1
+UFC_CREDO_ECOM_SSL_CERTIFICATE_PATH: ecommerce.ufc.ge_5661001.p12
+UFC_CREDO_ECOM_SSL_CERTIFICATE_PASSWORD: -EMB5dln9ptDIyL1
+UFC_CREDO_ECOM_UNVERIFIED_SSL_CERTIFICATE_PATH: ecommerce.ufc.ge_5661002.p12
+UFC_CREDO_ECOM_UNVERIFIED_SSL_CERTIFICATE_PASSWORD: M7oUFCCGLtW1kXoP
+
+CREDO_CLIENT_USERNAME: testing
+CREDO_CLIENT_PASSWORD: Bb123123@
+CREDO_CLIENT_SECRET: HnfKSYgxh5
+CREDO_DISTRIBUTOR_AUTH_URL: https://testkeepzmeapi.credo.ge/login
+CREDO_DISTRIBUTOR_REFRESH_TOKEN_URL: https://testkeepzmeapi.credo.ge/refresh-access-token
+CREDO_DISTRIBUTOR_INTERNAL_TRANSFER_URL: https://testkeepzmeapi.credo.ge/transfers/internal
+CREDO_DISTRIBUTOR_EXTERNAL_TRANSFER_URL: https://testkeepzmeapi.credo.ge/transfers/external
+CREDO_DISTRIBUTOR_TRANSACTION_STATUS_URL: https://testkeepzmeapi.credo.ge/mycredo-transfers/check-status/{id}
+
+LIBERTY_CONFIRM_URL: https://my.libertybank.ge/api/transfer/v2/to-someone/confirm
+LIBERTY_CREATE_URL: https://my.libertybank.ge/api/transfer/v2/to-someone
+
+LIBERTY_STATUS_URL: https://my.libertybank.ge/api/currenttask/v1/corporate/get-current-task/
+COMMON_URI : ${COMMON_SERVICE_URI}
+ECOMMERCE_URI: ${ECOMMERCE_SERVICE_URI}
+
+QR_BASE_URL: https://web.appdev.keepz.me/pay
+QUARTZ_INITIALIZE_SCHEMA: never
+NBG_CURRENCY_URL: https://nbg.gov.ge/gw/api/ct/monetarypolicy/currencies/ka/json/
+
+BOG_CURRENCY_URL: https://api.businessonline.ge/api/rates/nbg/
+GREENWASH_BROKER_HOST: 18.196.143.60
+GREENWASH_BROKER_PORT: 1883
+GREENWASH_CLIENT_ID: keepz-carwash-app
+GREENWASH_USERNAME: WasherAdmin
+GREENWASH_PASSWORD: 60a2dd9749a123223ee01769085ed2dc
+GREENWASH_HEARTBEAT_INTERVAL_SECONDS: 60
+GREENWASH_COMMANDS_GENERAL: CarWash/%s/commands/general
+GREENWASH_EVENTS_GENERAL: CarWash/%s/events/general
+GREENWASH_EVENTS_HEARTBEAT: CarWash/%s/events/heartBeat
+GREENWASH_AMOUNT_SIZE_PER_MESSAGE: 50
+GREENWASH_DELAY_PER_MESSAGE: 1000
+
+
+SIPAY_APP_KEY: 3c35b952bbf50c53aa2136d8f51ce617
+SIPAY_APP_SECRET: a6213327b50d704aae3552dcecf1acd2
+SIPAY_BASE_URL: https://provisioning.sipay.com.tr
+SIPAY_MERCHANT_KEY: $2y$10$vTKSXkFdwPNdXAE1r81rxuOF84EpKTu1G0DWmBuTDV.Nc0e.vTPCe
+SIPAY_FAIL_URL: https://web.appdev.keepz.me/payment-failed
+SIPAY_SUCCESS_URL: https://web.appdev.keepz.me/success
+SIPAY_PAYMENT_WEB_HOOK_KEY: payment_hook
+SIPAY_REFUND_WEB_HOOK_KEY: DEFAULT_REFUND_WEB_HOOK
+
+SOCIAL_GET_CAMPAIGN_LABELS_URL: ${GW_HOST}/social-service/api/v1/label
+
+DISTRIBUTE_BY_HUB: false
+
+NCI_SERVICE_URI: http://92.241.79.133:8080/nci/NCIServiceBean?wsdl
+UCC_SERVICE_URI: http://92.241.79.133:8080/ucc-services/UCCServicesBean?wsdl
+UCC_ENCRYPT_PROPERTIES: /ucc/test-encrypt.properties
+UCC_SIGN_PROPERTIES: /ucc/test-sign.properties
+
+FINA_SECURED_KEY: UNp5LsjzQ1wqO6TdYaDFeB8M7fmh35Uk
+FINA_SERVICE_URI: https://demo.emenu.ge
+
+BASE_PAY_URL: https://www.web.appdev.keepz.me/pay
+APPLE_GOOGLE_PAY_KEYCLOAK_CLIENT_ID: keepz-apple-google-pay-integrators
+APPLE_GOOGLE_PAY_KEYCLOAK_CLIENT_SECRET: 44929fe3-f17b-4423-a4db-82151cba0ea6
+custom:
+  request:
+    time-to-live: 300
+  sda:
+    key: 65801442a60ad02ff801c392_917e9ff7264f1791d6dc64890b2498ed5042a8fb
+    url: https://widget.identomat.com/external-api/begin
+  payze:
+    api-key: 0F76255523464ED58983E95AC17C1383
+    api-secret: 941CE9F4506144ADBEDD05591074A497
+    callback-url: https://gateway.dev.keepz.me/payment-service/api/payze/transaction/hook
+    fail-url: https://web.appdev.keepz.me/payment-failed
+    return-url: https://web.appdev.keepz.me/standard-pending
+    success-url: https://web.appdev.keepz.me/success
+    request-url: https://payze.io/v2/api/payment
+    details-url: https://payze.io/v2/api/payment/query/token-based
+    refund-url: https://payze.io/v2/api/payment/refund
+  bog:
+    callback-url: https://gateway.dev.keepz.me/payment-service/api/bog/transaction/hook
+    fail-url: https://web.appdev.keepz.me/payment-failed
+    return-url: https://web.appdev.keepz.me/standard-pending
+    success-url: https://web.appdev.keepz.me/success
+    request-url: ${BOG_REQUEST_ENDPOINT:https://api.bog.ge/payments/v1/ecommerce/orders}
+    request-with-card-url: ${BOG_REQUEST_WITH_CARD_ENDPOINT:https://api.bog.ge/payments/v1/ecommerce/orders/}
+    save-card-url: ${BOG_SAVE_CARD_ENDPOINT:https://api.bog.ge/payments/v1/orders/}
+    token-url: ${BOG_TOKEN_ENDPOINT:https://oauth2.bog.ge/auth/realms/bog/protocol/openid-connect/token}
+    details-url: ${BOG_DETAILS_ENDPOINT:https://api.bog.ge/payments/v1/receipt/}
+    refund-url: ${BOG_REFUND_ENDPOINT:https://api.bog.ge/payments/v1/payment/refund/}
+    user: ${USER:ROY1I2TW974SUAPI}
+    password: ${PASSWORD:042J1XVPS3ZLE8R9WNUI}
+    new-user: ${USER:LBMZK08HQUIWOAPI}
+    new-password: ${PASSWORD:43RC9HN6D2A0BO57IKPG}
+    start-session-url: ${START_SESSION_URL:https://mpi.gc.ge/open/api/v4/66EF9A2E6D429D8F0C767574F9353E8B/session/start}
+    mobile-start-session-url: ${MOBILE_START_SESSION_URL:https://mpi.gc.ge/open/api/v4/B017853764E36EB69E831F9B46880E61/session/start}
+    gc-token-url: ${GC_TOKEN_URL:https://mpi.gc.ge/open/api/v4/66EF9A2E6D429D8F0C767574F9353E8B/token}
+    gc-url: ${GC_URL:https://mpi.gc.ge/open/api/v4/66EF9A2E6D429D8F0C767574F9353E8B/payment/}
+    gc-history-url: ${GC_HISTORY_URL:https://mpi.gc.ge/open/api/v4/66EF9A2E6D429D8F0C767574F9353E8B/merchant/history/trx/}
+    gc-refund-url: ${GC_REFUND_URL:https://mpi.gc.ge/open/api/v4/66EF9A2E6D429D8F0C767574F9353E8B/merchant/history/trx/}
+    mobile-gc-token-url: ${MOBILE_GC_TOKEN_URL:https://mpi.gc.ge/open/api/v4/B017853764E36EB69E831F9B46880E61/token}
+    mobile-gc-url: ${MOBILE_GC_URL:https://mpi.gc.ge/open/api/v4/B017853764E36EB69E831F9B46880E61/payment/}
+    mobile-gc-refund-url: ${MOBILE_GC_REFUND_URL:https://mpi.gc.ge/open/api/v4/B017853764E36EB69E831F9B46880E61/merchant/history/trx/}
+  tbc:
+    acquiring:
+      apikey: yu5csVe7uQEvj2axA1bVlj7ZnFcva2yK
+      client-id: 7001940
+      client-secret: 21bawJpjjm8bkBxz
+      token-url: https://api.tbcbank.ge/v1/tpay/access-token
+      request-url: https://api.tbcbank.ge/v1/tpay/payments
+      request-with-card-url: https://api.tbcbank.ge/v1/tpay/payments/execution
+      return-url: https://www.web.appdev.keepz.me/standard-pending
+      callback-url: https://gateway.dev.keepz.me/payment-service/api/tbc/transaction/hook
+      cancel-url: https://api.tbcbank.ge/v1/tpay/payments/{payId}/cancel
+      delete-saved-card-url: https://api.tbcbank.ge/v1/tpay/payments/{recId}/delete
+
+    ufc:
+      apple-pay-execute: https://keepzpaytbc.ufc.ge/applePay/sms/execute
+      apple-pay-dms: https://keepzpaytbc.ufc.ge/applePay/sms/register
+      google-pay-execute: https://keepzpaytbc.ufc.ge/ecomm/v1.0/payments
+      refund-url: https://keepzpaytbc.ufc.ge/ecomm/v1.0/payments/refund
+      reversal-url: https://keepzpaytbc.ufc.ge/ecomm/v1.0/payments/{id}/reversal
+      get-info-url: https://keepzpaytbc.ufc.ge/ecomm/v1.0/payments/{id}
+      google-pay-decrypt-url: https://keepzpaytbc.ufc.ge/googlepay/decrypt
+      ecom-url: https://ecommerce.ufc.ge:18443/ecomm2/MerchantHandler?
+      ecom-web-url: https://ecommerce.ufc.ge/ecomm2/ClientHandler
+      p2p-client-ip: 35.157.186.80
+      finish: https://keepzpaytbc.ufc.ge/ecomm/v1.0/payments/{id}/finish
+
+  credo:
+    ufc:
+      apple-pay-execute: https://testacs.ufc.ge:8547/applePay/sms/execute
+      google-pay-execute: https://testacs.ufc.ge:8547/ecomm/v1.0/payments
+      refund-url: https://test3ds.ufc.ge:8449/ecomm/v1.0/payments/refund
+      reversal-url: https://test3ds.ufc.ge:8449/ecomm/v1.0/payments/{id}/reversal
+      get-info-url: https://test3ds.ufc.ge:8449/ecomm/v1.0/payments/{id}
+      google-pay-decrypt-url: https://test3ds.ufc.ge:8449/googlepay/decrypt
+      ecom-url: https://ecommerce.ufc.ge:18443/ecomm2/MerchantHandler?
+
+    installment:
+#      ---------------Temporarily commented out dev properties
+#      merchant_id: 10112
+#      password: U5a3AG23a3
+#      hash_password: kjebl2m
+#      username: Keepz
+#      auth-url: http://185.205.88.254:3848/api/User/Authenticate
+#      get_status_url: https://185.205.88.254:8443/widget/api.php
+#      create_order_url: https://185.205.88.254:8443/widget_api/order.php
+#      cancel_url: http://185.205.88.254:3848/api/Shop/CancelInstallment
+#      mark-as-delivered: http://185.205.88.254:3848/api/Shop/MarkAsDelivered
+#      otp_url: https://185.205.88.254:8443/external-account/otp-confirmation/
+#      redirect-url: https://web.appdev.keepz.me
+#      generate_payment_code_url: http://185.205.88.254:3848/api/Shop/GeneratePaymentCode
+#      landing_url: https://185.205.88.254:8443/external-account/landing/authorization/
+      merchant_id: 19887
+      password: "x9VmQ3!K1"
+      hash_password: "%00l7DlmF#"
+      username: Keepz
+      auth-url: http://185.205.88.254:1414/api/User/Authenticate
+      get_status_url: https://ganvadeba.credo.ge/widget/api.php
+      create_order_url: https://ganvadeba.credo.ge/widget_api/order.php
+      cancel_url: http://185.205.88.254:1414/api/Shop/CancelInstallment
+      mark-as-delivered: http://185.205.88.254:1414/api/Shop/MarkAsDelivered
+      otp_url: https://ganvadeba.credo.ge/account/otp-confirmation/
+      redirect-url: https://web.appdev.keepz.me
+      generate_payment_code_url: http://185.205.88.254:1414/api/Shop/GeneratePaymentCode
+      landing_url: https://ganvadeba.credo.ge/account/landing/authorization/
+
+    acquiring:
+      callback-url: https://gateway.dev.keepz.me/payment-service/api/credo/transaction/hook
+      return-url: https://www.web.appdev.keepz.me/standard-pending
+      auth-url: https://ecommercegateway.credo.ge/connect/token
+      client-id: keepz
+      client-secret: ad8c3cb7-fb94-419d-95cb-9dfa39aa9162
+      get-details-transactionId: https://ecommercegateway.credo.ge/ecomm/payments
+      merchant-id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+      request-url: https://ecommercegateway.credo.ge/ecomm/payments
+      reversal-url: https://ecommercegateway.credo.ge/ecomm/payments/reversal
+      refund-url: https://ecommercegateway.credo.ge/ecomm/payments/refund
+      scope: ecommerce-api
+
+  third-party:
+    reverse-url: https://testkeepzmeapi.credo.ge/mycredo-transfers/check-status/{id}
+    partially-reverse-url: https://testkeepzmeapi.credo.ge/mycredo-transfers/Reverse
+    check-status-url: https://testkeepzmeapi.credo.ge/mycredo-transfers/PartiallyReverse
+  mollie:
+    api-key: test_c2S2GxqAFSPEBHj6PdxHACWtHg4SMu
+    return-url: https://www.web.appdev.keepz.me/standard-pending
+    callback-url: https://gateway.dev.keepz.me/payment-service/api/mollie/transaction/hook
+  loyalty:
+    success-url: https://web.appdev.keepz.me/success
+  nuvei:
+    pay-url: https://ppp-test.safecharge.com/ppp/purchase.do
+    callback-url: https://gateway.dev.keepz.me/payment-service/api/nuvei/transaction/hook
+    fail-url: https://web.appdev.keepz.me/payment-failed
+    success-url: https://web.appdev.keepz.me/success
+    merchant-id: 53520597865316599
+    merchant-site-id: 442111
+    merchant-secret: RtEMKuF6Qyjed91kSb9awqt4mOIHHXz3lpV0gwLppjNdgyn3alNnhElbc33cIo56
+    pending-url: https://www.web.appdev.keepz.me/standard-pending
+    token: FD5CKXRZwMTV3uJrfkfvCsZrForzcFK6Nmn.FD5CKXRaCp77hnhN8DDN9q8TRVQu9SosmRJ
+    payout-base-url: https://sandbox.payaut.com
+  soft-pos:
+    secret-key: testSecretKey
+    base-url: https://uat.yazara.io
+    username: credo_onboarding
+    password: is@f9Npz!cer
+    acquirer-id: 410041
+
+spring:
+  kafka:
+    bootstrap-servers: ${KF_HOST}
+  jpa:
+    properties:
+      hibernate:
+        cache:
+          use_second_level_cache: true
+          use_query_cache: true
+          region:
+            factory_class: "org.redisson.hibernate.RedissonRegionFactory"
+          redisson:
+            fallback: false
+            entity:
+              expiration:
+                time_to_live: 300000
+            Integrator:
+              expiration:
+                time_to_live: 900000
+              invalidation:
+                on_change: false
+            BranchAccount:
+              expiration:
+                time_to_live: 300000
+            MerchantGroup:
+              expiration:
+                time_to_live: 3000
+            UserGroup:
+              expiration:
+                time_to_live: 3000
+            PaymentTypeCommission:
+              expiration:
+                time_to_live: 30000
+            PaymentTypeCommissionPayer:
+              expiration:
+                time_to_live: 30000
+            PaymentTypeCommissionTier:
+              expiration:
+                time_to_live: 30000

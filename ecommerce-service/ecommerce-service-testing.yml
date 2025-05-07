@@ -1,0 +1,25 @@
+PAYMENT_BASE_URI: ${PAYMENT_SERVICE_URI}
+GATEWAY_HOST: https://gateway.dev.keepz.me
+URI_FOR_DIRECT_LINK: ${PAYMENT_BASE_URI}/api/transaction/pay/ecommerce
+URI_FOR_DIRECT_LINK_SAVE_CARD: ${PAYMENT_BASE_URI}/api/transaction/pay/ecommerce/save/card
+URI_FOR_DIRECT_LINK_PAY_WITH_SAVE_CARD: ${PAYMENT_BASE_URI}/api/transaction/pay/ecommerce/saved/card
+URI_FOR_OB_DIRECT_LINK: ${PAYMENT_BASE_URI}/api/v1/open-banking/transaction/ecommerce
+URI_FOR_CITYPAY_DIRECT_LINK: ${PAYMENT_BASE_URI}/api/citypay/ecommerce
+URI_FOR_INSTALLMENT_DIRECT_LINK: ${PAYMENT_BASE_URI}/api/credo/installment/ecommerce
+URI_FOR_CONSENT_DIRECT_LINK: ${PAYMENT_BASE_URI}/api/v1/consent/ecommerce/create
+FRAUD_ANALYZER_URI: ${FRAUD_ANALYZER_SERVICE_URI}
+COMMON_URI : ${COMMON_SERVICE_URI}
+ORDER_EXPIRES_IN_SECONDS: 300
+ORDER_TIME_TO_LIVE_IN_REDIS: 480
+TINY_URL_TOKEN: ${TINY_URL_TKN}
+TINY_URL_URL: https://api.tinyurl.com/create
+TINY_DOMAIN: tiny.dev.keepz.me
+KEYCLOAK_INTERNAL_SERVICE_CLIENT_ID: sweeft-internal-service
+KEYCLOAK_INTERNAL_SERVICE_CLIENT_SECRET: e3c2a56a-8411-4926-86cc-478467a7484a
+
+RS_USERNAME: test
+RS_PASSWORD: test
+
+spring:
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST}

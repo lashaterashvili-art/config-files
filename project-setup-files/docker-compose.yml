@@ -1,0 +1,134 @@
+version: "3.5"
+
+networks:
+  NETWORK:
+    external: true
+services:
+
+  postgres:
+    image: postgres:12
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_PASSWORD: sweeft
+      POSTGRES_USER: sweeft
+      POSTGRES_DB: sweeft
+    networks:
+      - NETWORK
+  keycloak:
+    image: quay.io/keycloak/keycloak:14.0.0
+    container_name: keycloak
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: postgres
+      DB_DATABASE: sweeft
+      DB_USER: sweeft
+      DB_SCHEMA: public
+      DB_PASSWORD: sweeft
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+      # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
+      #JDBC_PARAMS: "ssl=true"
+    ports:
+      - 8081:8080
+    depends_on:
+      - postgres
+    networks:
+      - NETWORK
+  zookeeper:
+    image: bitnami/zookeeper:latest
+    networks:
+      - NETWORK
+    ports:
+      - '2181:2181'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+      - ZOOKEEPER_TICK_TIME=4000
+  kafka:
+    image: bitnami/kafka:latest
+    ports:
+      - '12092:9092'
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    environment:
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_CFG_LISTENERS=INTERNAL://:9093,EXTERNAL://:9092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=INTERNAL://kafka:9093,EXTERNAL://localhost:12092
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=INTERNAL
+    depends_on:
+      - zookeeper
+    networks:
+      - NETWORK
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.7.0
+    environment:
+      discovery.type: single-node
+    ports:
+      - 9200:9200
+      - 9300:9300
+    volumes:
+      - sweeft-social-elasticsearch:/usr/share/elasticsearch/data
+    networks:
+      - NETWORK
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.7.0
+    ports:
+      - 5601:5601
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    networks:
+      - NETWORK
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.7.0
+    container_name: logstash
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+    volumes:
+      - ./config:/etc/logstash/conf.d
+    ports:
+      - "5000:5000"
+#    networks:
+#      backend:
+#        aliases:
+#          - "logstash"
+    networks:
+      - NETWORK
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    depends_on:
+      - elasticsearch
+    environment:
+      - STORAGE_TYPE=elasticsearch
+      - "ES_HOSTS=elasticsearch:9300"
+    ports:
+      - "9411:9411"
+#    networks:
+#      backend:
+#        aliases:
+#          - "zipkin"
+    networks:
+      - NETWORK
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+    networks:
+      - NETWORK
+#  minio:
+#    image: minio/minio
+#    command: server /data --console-address ":9001"
+#    ports:
+#      - 9000:9000
+#      - 9001:9001
+#    environment:
+#      - MINIO_REGION_NAME=eu-central-1
+#      - MINIO_ROOT_USER=AKIAIOSFODNN7EXAMPL
+#      - MINIO_ROOT_PASSWORD=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+#    volumes:
+#      - C:\data:/data
+#    networks:
+#      - NETWORK
+volumes:
+  sweeft-social-elasticsearch:

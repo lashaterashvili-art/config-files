@@ -1,0 +1,168 @@
+server:
+  port: 8082
+  servlet:
+    session:
+      timeout: 10m
+  tomcat:
+    connection-timeout: 10m
+    keep-alive-timeout: 10m
+  shutdown: graceful
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  mvc:
+    async:
+      request-timeout: 10m
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_HOST_ENV}/auth/realms/${REALM_ENV}
+      client:
+        registration:
+          microservices-client:
+            client-id: ${KEYCLOAK_ADMIN_MICROSERVICES_CLIENT}
+            client-secret: ${KEYCLOAK_ADMIN_MICROSERVICES_SECRET}
+            authorization-grant-type: client_credentials
+            scope: openid
+        provider:
+          microservices-client:
+            token-uri: ${KEYCLOAK_HOST_ENV}/auth/realms/${MICROSERVICES_REALM}/protocol/openid-connect/token
+
+  data:
+    redis:
+      host: ${REDIS_HOST}
+  datasource:
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  jpa:
+#    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+      org:
+        hibernate:
+          envers:
+            audit_table_suffix: _aud
+            revision_field_name: rev
+            revision_type_field_name: revtype
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        cache:
+          use_second_level_cache: false
+          use_query_cache: false
+
+logging:
+  level:
+    org.hibernate.query.internal.AbstractProducedQuery: WARN
+    org.hibernate.orm.query: WARN
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+    version: openapi_3_0
+  swagger-ui:
+    path: /swagger-ui.html
+  show-actuator: false
+  packages-to-scan: me.keepz.keepzwalletadminpanel
+
+keycloak:
+  auth-server-url: ${KEYCLOAK_HOST_ENV}/auth
+  realm: ${REALM_ENV}
+  resource: ${KEYCLOAK_CLIENT_ENV}
+  public-client: false
+  credentials:
+    secret: ${KEYCLOAK_CLIENT_SECRET_ENV}
+  payment:
+    realm: sweeft
+
+
+auth:
+  server:
+    admin:
+      user: ${KEYCLOAK_ADMIN_USER_ENV}
+      password: ${KEYCLOAK_ADMIN_PASSWORD_ENV}
+      default-password: ${KEYCLOAK_DEFAULT_PASSWORD_ENV}
+      password-application: Aa123456
+
+custom:
+  otp:
+    tempPasswordTtl: 1440 #24*60 24 hours
+    static: 123321123
+  keycloak:
+    token-uri: ${KEYCLOAK_HOST_ENV}/auth/realms/${REALM_ENV}/protocol/openid-connect/token
+    base-uri: ${KEYCLOAK_HOST_ENV}
+  web:
+    forgot-password-uri: ${FORGOT_PASSWORD_URI}
+  ecommerce:
+    uri: ${ECOMMERCE_URI}
+    integrator-id: ${ECOMMERCE_INTEGRATOR_ID}
+  payment:
+    uri: ${PAYMENT_URI}
+  fraud-analyzer:
+    uri: ${FRAUD_ANALYZER_URI}
+  default-qr-url: ${DEFAULT_QR_URL}
+  distributor-hub:
+    uri: ${DISTRIBUTOR_HUB_URI}
+    client_id: ${DISTRIBUTOR_HUB_CLIENT_ID}
+    client_secret: ${DISTRIBUTOR_HUB_CLIENT_SECRET}
+    grant_type: ${DISTRIBUTOR_HUB_GRANT_TYPE}
+
+  iban-review-success-msg: ${IBAN_REVIEW_SUCCESS_MSG}
+  iban-review-failed-msg: ${IBAN_REVIEW_FAILED_MSG}
+
+  iban-review-success-msg-eng: ${IBAN_REVIEW_SUCCESS_MSG_ENG}
+  iban-review-failed-msg-eng: ${IBAN_REVIEW_FAILED_MSG_ENG}
+
+  iban-review-success-msg-ita: ${IBAN_REVIEW_SUCCESS_MSG_ITA}
+  iban-review-failed-msg-ita: ${IBAN_REVIEW_FAILED_MSG_ITA}
+
+psda:
+  senderId: keepzme
+  value: Ko5123DQtSW0
+  documentSubcontractId: KeepzPersonInfo1
+  keyExchangeSubcontractId: KeepzKeyExchange1
+  url: ${SDA_URL}
+
+amazon:
+  credentials:
+    accessKey: ${AWS_ACC:AKIA25EL2GQD57IOGTML}
+    secretKey: ${AWS_SECRET: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}
+    accessKeyDoc: ${AWS_ACC_DOC}
+    secretKeyDoc: ${AWS_SECRET_DOC}
+  s3:
+    endpoint: ${AWS_ENDPOINT:https://wallet-keepz-s3.s3.eu-central-1.amazonaws.com}
+    endpoint-doc: ${AWS_ENDPOINT_DOC}
+    bucketName: ${AWS_BUCKETNAME}
+    bucket-name-doc: ${AWS_BUCKET_NAME_DOC}
+    user-profile-image-base-url: ${USER_PROFILE_IMAGE_BASE_URL}
+    user-documents-base-url: ${USER_DOCUMENT_BASE_URL}
+    merchant-profile-image-base-url: ${MERCHANT_PROFILE_BASE_URL}
+    merchant-documents-base-url: ${MERCHANT_DOCUMENT_BASE_URL}
+    main-folder: ${S3_MAIN_FOLDER}
+  region: ${AWS_REGION:eu-central-1}
+
+temporary:
+  user:
+    password-length: 8
+    identifier-starting-value: 995600000000
+    key:
+      valid-until: 300
+tiny-url:
+  token: ${TINY_URL_TOKEN}
+  url: ${TINY_URL_URL}
+  domain: ${TINY_DOMAIN}

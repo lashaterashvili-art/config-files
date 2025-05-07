@@ -1,0 +1,39 @@
+
+
+AWS_ACC: AKIA25EL2GQD57IOGTML
+AWS_SECRET: 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
+AWS_REGION: eu-central-1
+AWS_ENDPOINT: https://wallet-keepz-dev-s3.s3.eu-central-1.amazonaws.com
+AWS_BUCKETNAME: sweeft-me-wallet-images
+AWS_ENDPOINT_DOC: https://wallet-keepz-dev-s3.s3.eu-central-1.amazonaws.com
+AWS_BUCKET_NAME_DOC: sweeft-me-wallet-images
+AWS_ACC_DOC: AKIA25EL2GQD57IOGTML
+AWS_SECRET_DOC: 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
+
+REALM: sweeft
+KEYCLOAK_HOST: http://localhost:8081
+KEYCLOAK_ADMIN_USER: admin
+KEYCLOAK_ADMIN_PASSWORD: admin
+KEYCLOAK_CLIENT: sweeft-api-gateway
+KEYCLOAK_SECRET: 006e7440-b424-4670-9f49-66e725cfe7a7
+KEYCLOAK_INTERNAL_SERVICE_CLIENT_ID: sweeft-internal-service
+KEYCLOAK_INTERNAL_SERVICE_CLIENT_SECRET: 4ed1c1ca-fd1a-48e5-b083-3c69e3200958
+
+KAFKA_HOST: localhost:12092
+ZOOKEPER_HOST:  localhost:2181
+EUREKA_HOST: http://localhost:8070/eureka
+LOGSTASH_HOST: localhost:5000
+
+LIMIT_HOST: https://appdev.keepz.me:9000
+FILEMANAGER_PORT: 8031
+
+POSTGRES_URL: jdbc:postgresql://localhost:5433/filemanager
+POSTGRES_USER: sweeft
+POSTGRES_PASSWORD: sweeft
+
+IDENTOMAT_COMPANY_KEY: 6580b40d299edf612f00bf72_bf48a50e59ab4a065075485aaaf77dfb927daba2
+IDENTOMAT_BASE_URL: https://widget.identomat.com/external-api/
+IDENTOMAT_EXTERNAL_BASE_URL: https://external.api.identomat.com/
+
+
+KF_HOST: http://localhost:12092

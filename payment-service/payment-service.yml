@@ -1,0 +1,518 @@
+server:
+  port: ${PAYMENT_PORT}
+  error:
+    include-message: always
+spring:
+  kafka:
+    bootstrap-servers: ${KF_HOST}
+  elasticsearch:
+    rest:
+      uris: ${ELASTIC_URI}
+      password: ${ELASTIC_PASSWORD}
+      username: ${ELASTIC_USERNAME}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}
+      client:
+        registration:
+          keycloak-service:
+            client-id: ${KEYCLOAK_INTERNAL_SERVICE_CLIENT_ID}
+            client-secret: ${KEYCLOAK_INTERNAL_SERVICE_CLIENT_SECRET}
+            authorization-grant-type: client_credentials
+            scope: openid
+        provider:
+          keycloak-service:
+            token-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}/protocol/openid-connect/token
+  redis:
+    host: ${REDIS_HOST}
+  datasource:
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  quartz:
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: ${QUARTZ_INITIALIZE_SCHEMA}
+    properties:
+      org:
+        quartz:
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            dataSource: quartzDataSource
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+
+  mvc:
+    log-resolved-exception: true
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    stream:
+      bindings:
+        outputFraudAnalyzer:
+          content-type: application/json
+          destination: fraudAnalyzer
+          group: fraud-analyzer-system
+        inputBranchAccountCreateEvent:
+          content-type: application/json
+          destination: branchAccountCreateEvent
+          group: payment-system
+        outputSocialFeed:
+          content-type: application/json
+          destination: socialFeed
+          group: payment-system
+        inputPaymentUser:
+          content-type: application/json
+          destination: paymentUser
+          group: payment-system
+        inputPaymentUserImage:
+          content-type: application/json
+          destination: paymentUserImage
+          group: payment-system
+        outputNotification:
+          content-type: application/json
+          destination: notification
+          group: payment-system
+        inputUserTransactionCreateEvent:
+          content-type: application/json
+          destination: userTransactionCreateEvent
+          group: payment-system
+        outputUserTransactionCreateEvent:
+          content-type: application/json
+          destination: userTransactionCreateEvent
+          group: payment-system
+        inputGenericTransactionCreateEvent:
+          content-type: application/json
+          destination: genericTransactionCreateEvent
+          group: payment-system
+        outputGenericTransactionCreateEvent:
+          content-type: application/json
+          destination: genericTransactionCreateEvent
+          group: payment-system
+        inputGenericTransactionUpdateEvent:
+          content-type: application/json
+          destination: genericTransactionUpdateEvent
+          group: payment-system
+        outputGenericTransactionUpdateEvent:
+          content-type: application/json
+          destination: genericTransactionUpdateEvent
+          group: payment-system
+        inputTransactionRefundEvent:
+          content-type: application/json
+          destination: transactionRefundEvent
+          group: payment-system
+        outputTransactionRefundEvent:
+          content-type: application/json
+          destination: transactionRefundEvent
+          group: payment-system
+        inputMerchantAccountCreateEvent:
+          content-type: application/json
+          destination: merchantAccountCreateEvent
+          group: payment-system
+
+        inputRefundInfoEvent:
+          content-type: application/json
+          destination: refundInfoEvent
+          group: payment-system
+        outputRefundInfoEvent:
+          content-type: application/json
+          destination: refundInfoEvent
+          group: payment-system
+        outputIntegratorCallbackEvent:
+          content-type: application/json
+          destination: integratorCallbackEvent
+          group: payment-system
+        outputIntegratorUserCreateEvent:
+          content-type: application/json
+          destination: integratorUserCreateEvent
+          group: payment-system
+        inputVerifyUser:
+          content-type: application/json
+          destination: verifyUser
+          group: payment-system
+        inputCallbackEvent:
+          content-type: application/json
+          destination: callbackEvent
+          group: payment-system
+        outputCallbackEvent:
+          content-type: application/json
+          destination: callbackEvent
+          group: payment-system
+        inputIntegratorOrderRefundEvent:
+          content-type: application/json
+          destination: integratorOrderRefundEvent
+          group: payment-system
+        outputDeactivateReceivedAmount:
+          content-type: application/json
+          destination: deactivateReceivedAmount
+          group: payment-system
+        inputOrderCommissionPayer:
+          content-type: application/json
+          destination: orderCommissionPayer
+          group: payment-system
+
+      kafka:
+        #        bindings:
+        #          inputIntegratorOrderRefundEvent:
+        #            consumer:
+        #              autoCommitOffset: false
+        #          integratorOrderRefundEvent:
+        #            consumer:
+        #              autoCommitOffset: false
+        binder:
+          consumer-properties:
+            session.timeout.ms: 10000
+            max.poll.interval.ms: 300000
+          min-partition-count: 1
+          #          auto-add-partitions: true
+          brokers: ${KAFKA_HOST} #kafka on production
+          zkNodes: ${ZOOKEPER_HOST} #kafka on production
+  #          producer-properties:
+  #            value:
+  #              serializer: org.apache.kafka.common.serialization.StringSerializer
+  database:
+    driverClassName: org.postgresql.Driver
+  jpa:
+    database: POSTGRESQL
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        cache:
+          use_second_level_cache: true
+          use_query_cache: true
+          region:
+            factory_class: "org.redisson.hibernate.RedissonRegionFactory"
+          redisson:
+            fallback: false
+            query:
+              expiration:
+                time_to_live: 300000
+            default:
+              expiration:
+                time_to_live: 300000
+            entity:
+              expiration:
+                time_to_live: 300000
+            Integrator:
+              expiration:
+                time_to_live: 900000
+              invalidation:
+                on_change: false
+            BranchAccount:
+              expiration:
+                time_to_live: 300000
+            MerchantGroup:
+              expiration:
+                time_to_live: 3000
+            UserGroup:
+              expiration:
+                time_to_live: 3000
+            UserPaymentAccount:
+              expiration:
+                time_to_live: 300000
+            PaymentTypeCommission:
+              expiration:
+                time_to_live: 30000
+            PaymentTypeCommissionPayer:
+              expiration:
+                time_to_live: 30000
+            PaymentTypeCommissionTier:
+              expiration:
+                time_to_live: 30000
+            AcquiringCurrency:
+              expiration:
+                time_to_live: 30000
+    generate-dll: true
+  data:
+    elasticsearch:
+      client:
+        reactive:
+          endpoints: ${ELASTIC_HOST}
+          password: ${ELASTIC_PASSWORD}
+          username: ${ELASTIC_USERNAME}
+bindings:
+  input-channel-name:
+    consumer:
+      concurrency=5:springfox:
+
+logging:
+  level:
+    org.hibernate.query.internal.AbstractProducedQuery: WARN
+
+keycloak:
+  realm: ${REALM}
+  auth-server-url: ${KEYCLOAK_HOST}/auth
+  resource: ${KEYCLOAK_CLIENT}
+  public-client: true
+auth:
+  server:
+    admin:
+      user: ${KEYCLOAK_ADMIN_USER}
+      password: ${KEYCLOAK_ADMIN_PASSWORD}
+payment:
+  base-pay-url: ${BASE_PAY_URL}
+  web:
+    domain: ${DOMAIN}
+  attempts-number: 5
+  distribute-by-hub: ${DISTRIBUTE_BY_HUB}
+  commonUri: ${COMMON_URI}/api/v1/profile/for-payment
+  commonUriForUserDto: ${COMMON_URI}/api/v1/profile/get/by/{fromUser}
+  commonUriForListUserDto: ${COMMON_URI}/api/v1/profile/get/multiple/users
+  commonUriForMerchantDto: ${COMMON_URI}/api/v1/merchant/{merchantId}
+  commonUriForUserGroupChange: ${COMMON_URI}/api/v1/profile/change-user-group/{from}/{to}
+  commonUriForMerchantGroupChange: ${COMMON_URI}/api/v1/merchant/change-merchant-group/{from}/{to}
+  commonUriForUserCountInUserGroup: ${COMMON_URI}/api/v1/profile/count/{user_group_id}
+  commonUriForMerchantCountInMerchantGroup: ${COMMON_URI}/api/v1/merchant/count/{merchant_group_id}
+  commonUriForIntegratorUserCreate: ${COMMON_URI}/api/v1/integrator/user/bulk
+  commonUriForEcommerceIntegratorOrderCheck: ${ECOMMERCE_URI}/api/integrator/order/check
+  commonUriForEcommerceIntegratorOrder: ${ECOMMERCE_URI}/api/integrator/order
+  commonUriForEcommerceIntegratorLastOrderCheck: ${ECOMMERCE_URI}/api/integrator/order/encrypted
+  commonUriForEcommerceIntegratorOrderStatusCheck: ${ECOMMERCE_URI}/api/integrator/order/status
+  commonUriForEcommerceIntegratorOrderStatusCancel: ${ECOMMERCE_URI}/api/integrator/order/cancel
+  commonUriForEcommerceIntegratorOrderStatusRefund: ${ECOMMERCE_URI}/api/integrator/order/refund
+  commonUriForEcommerceIntegratorOrderPostCheck: ${ECOMMERCE_URI}/api/integrator/order/post-transaction/check
+  commonUriForIntegratorUserGetInfo: ${COMMON_URI}/api/v1/integrator/user/info
+  commonServiceUrlForGetMerchantDetails: ${COMMON_URI}/api/v1/integrator/merchant/info
+  commonServiceUrlForGetBranchDetails: ${COMMON_URI}/api/v1/integrator/branch/info
+  commonUriForIntegratorMerchantCreate: ${COMMON_URI}/api/v1/integrator/merchant
+  commonUriForIntegratorMerchantUpdate: ${COMMON_URI}/api/v1/integrator/merchant
+  commonUriForIntegratorBranchCreate: ${COMMON_URI}/api/v1/integrator/branch
+  commonUriForIntegratorBranchUpdate: ${COMMON_URI}/api/v1/integrator/branch
+  commonUriForTipReceiverUserCreate: ${COMMON_URI}/api/v1/branch/tipReceiver/create
+  commonUriForTipReceiverBranchCreate: ${COMMON_URI}/api/v1/user/tipReceiver/create
+  commonUriForIntegratorMerchantAndBranchDetails: ${COMMON_URI}/api/v1/integrator/merchant-branch/info
+  commonUriForEcommerceCommissionPayerCheck: ${ECOMMERCE_URI}/api/v1/integrator/check
+  commonUriForIntegratorIbansCreate: ${COMMON_URI}/api/v1/ibans/add-ibans
+  commonUriForIntegratorIbansDelete: ${COMMON_URI}/api/v1/ibans/delete-ibans
+  commonUriForUpdateDefaultIban: ${COMMON_URI}/api/v1/ibans/update-default-integrator-iban
+  commonUriForDeleteBranch: ${COMMON_URI}/api/v1/integrator/merchant-branch/delete
+
+  sweeftBankId: ${SWEEFT_BANK_ID}
+  keycloak:
+    token-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}/protocol/openid-connect/token
+    authorization-uri: ${KEYCLOAK_HOST}/auth/realms/${REALM}/protocol/openid-connect/auth
+    client-id: ${KEYCLOAK_CLIENT}
+    client-secret: ${KEYCLOAK_SECRET}
+    realm: ${REALM}
+    apple-google-pay-client-id: ${APPLE_GOOGLE_PAY_KEYCLOAK_CLIENT_ID}
+    apple-google-pay-client-secret: ${APPLE_GOOGLE_PAY_KEYCLOAK_CLIENT_SECRET}
+  limit:
+    base-url:
+      check-limit: ${LIMIT_HOST}/api/OneStepTransactions
+      reset-limit: ${LIMIT_HOST}/api/TransactionReset
+    endpoints:
+      money-request: /ValidateMoneyRequest
+      money-request-reset: /ResetMoneyRequestAttempts
+      bank-account: /ValidateAddBankAccount
+      bank-account-reset: /ResetAddBankAccountAttempts
+  citypay:
+    #ძველი კონფიგურაცია
+    orderCreateUrl: ${CITYPAY_ORDER_CREATE_URL}
+    orderInfoUrl: ${CITYPAY_ORDER_INFO_URL}
+    accessToken: ${CITYPAY_ACCESS_TOKEN}
+    customerId: ${CITYPAY_CUSTOMER_ID}
+    #ახალი კონფიგურაცია
+    api:
+      key: ${CITYPAY_API_KEY}
+      secret: ${CITYPAY_API_SECRET}
+
+      #es droebitaa
+      key-dev: ${CITYPAY_API_KEY_DEV}
+      secret-dev: ${CITYPAY_API_SECRET_DEV}
+    merchant-identifier-dev: ${CITYPAY_MERCHANT_IDENTIFIER_DEV}
+    #esec droebitia
+    getOrderDetails: ${CITYPAY_GET_ORDER_DETAILS}
+    createOrderUrl: ${CITYPAY_CREATE_ORDER_URL}
+    createMerchantUrl: ${CITYPAY_CREATE_MERCHANT_URL}
+    merchant-identifier: ${CITYPAY_MERCHANT_IDENTIFIER}
+    payRedirectUrl: ${CITYPAY_REDIRECT_URL}
+    refund: ${CITYPAY_REFUND_URL}
+    createDirectOrderUrl: ${CITYPAY_DIRECT_ORDER_URL}
+    directOrderDetails: ${CITYPAY_GET_DIRECT_ORDER_DETAILS}
+    minRefundAmount: ${CITYPAY_REFUND_MIN_AMOUNT}
+
+  payze:
+    url: https://payze.io/api/v1
+    justPayMethodName: justPay
+    addCardMethodName: addCard
+    payWithSavedCardMethodName: payWithCard
+    getTransactionInfoMethodName: getTransactionInfo
+    api-key: ${PAYZE_APIKEY}              # setting as environment variable
+    api-secret: ${PAYZE_SECRETKEY}        # setting as environment variable
+    fail-url: ${PAYZE_FAIL_URL}           # setting as environment variable
+    success-url: ${PAYZE_SUCCESS_URL}     # setting as environment variable
+    hook-url: ${PAYZE_HOOK_URL}           # setting as environment variable
+  bog:
+    payment-type-limit: 10000
+    api-url: ${BOG_API_URL}               # located in the additional profile files
+    auth-url: ${BOG_AUTH_URL}             # located in the additional profile files
+    client-id: ${BOG_CLIENT_ID}           # setting as environment variable
+    client-secret: ${BOG_CLIENT_SECRET}   # setting as environment variable
+    bank-code: BAGAGE22
+    keepz-client-id: ${BOG_KEEPZ_CLIENT_ID}           # setting as environment variable
+    keepz-client-secret: ${BOG_KEEPZ_CLIENT_SECRET}
+  nuvei:
+    keepz-virtual-account: FD5CKXRgXkhLXKNGbLYfiyTurGcFhXVtBhJ
+  tbc:
+    auth-url: ${TBC_AUTH_URL}             # located in the additional profile files
+    client-id: ${TBC_CLIENT_ID}           # setting as environment variable
+    client-secret: ${TBC_CLIENT_SECRET}   # setting as environment variable
+    bank-code: TBCBGE22
+  #    dbi-username: ${TBC_DBI_USERNAME}
+  #    dbi-password: ${TBC_DBI_PASSWORD}
+  #    dbi-nonce: ${TBC_DBI_NONCE}
+  #    dbi-url: ${TBC_DBI_URL}
+  credo:
+    auth_url: ${CREDO_DISTRIBUTOR_AUTH_URL}
+    refresh_token_url: ${CREDO_DISTRIBUTOR_REFRESH_TOKEN_URL}
+    internal_transfer_url: ${CREDO_DISTRIBUTOR_INTERNAL_TRANSFER_URL}
+    external_transfer_url: ${CREDO_DISTRIBUTOR_EXTERNAL_TRANSFER_URL}
+    transaction_status_url: ${CREDO_DISTRIBUTOR_TRANSACTION_STATUS_URL}
+    client-password: ${CREDO_CLIENT_PASSWORD:d8368V73}
+    client-username: ${CREDO_CLIENT_USERNAME:KEEPZ_API_USR}
+    client-secret: ${CREDO_CLIENT_SECRET:OVhw5PY4Uj}
+
+  liberty:
+    confirm_url: ${LIBERTY_CONFIRM_URL}
+    create_url: ${LIBERTY_CREATE_URL}
+    status_url: ${LIBERTY_STATUS_URL}
+    auth_url: https://accounts.libertybank.ge/connect/token
+    redirect_url: https://app.keepz.me/lb
+    client_id: Keepzme
+
+  emoney:
+    distributor: Keepz
+    secret: X_Fzof*B10fozBP
+    pay-url: https://api.emoney.ge/distributors/service.svc/json/Pay
+    getInfo-url: https://api.emoney.ge/distributors/service.svc/json/GetInfo
+  ufc:
+    ssl-certificate-path: ${UFC_SSL_CERTIFICATE_PATH}
+    ssl-certificate-password: ${UFC_SSL_CERTIFICATE_PASSWORD}
+    ecom-ssl-certificate-path: ${UFC_ECOM_SSL_CERTIFICATE_PATH}
+    ecom-ssl-certificate-password: ${UFC_ECOM_SSL_CERTIFICATE_PASSWORD}
+    credo-ssl-certificate-path: ${UFC_CREDO_SSL_CERTIFICATE_PATH}
+    credo-ssl-certificate-password: ${UFC_CREDO_SSL_CERTIFICATE_PASSWORD}
+    credo-ecom-ssl-certificate-path: ${UFC_CREDO_ECOM_SSL_CERTIFICATE_PATH}
+    credo-ecom-ssl-certificate-password: ${UFC_CREDO_ECOM_SSL_CERTIFICATE_PASSWORD}
+    ecom-p2p-ssl-certificate-path: ${UFC_ECOM_P2P_SSL_CERTIFICATE_PATH}
+    ecom-p2p-ssl-certificate-password: ${UFC_ECOM_P2P_SSL_CERTIFICATE_PASSWORD}
+    credo-ecom-unverified-ssl-certificate-path: ${UFC_CREDO_ECOM_UNVERIFIED_SSL_CERTIFICATE_PATH}
+    credo-ecom-unverified-ssl-certificate-password: ${UFC_CREDO_ECOM_UNVERIFIED_SSL_CERTIFICATE_PASSWORD}
+  tiny-url:
+    token: ${TINY_URL_TOKEN}
+    url: ${TINY_URL_URL}
+    domain: ${TINY_DOMAIN}
+  fraud-analyzer:
+    uri: ${FRAUD_ANALYZER_URI}
+    activated: ${FRAUD_ANALYZER_ACTIVATED}
+  ecommerce:
+    uri: ${ECOMMERCE_URI}
+  social-service:
+    get-campaign-labels: ${SOCIAL_GET_CAMPAIGN_LABELS_URL}
+  open-banking:
+    frequency-per-day: 4
+    scheduler-interval: ${OB_JOB_INTERVAL:5}
+    pact-transaction-interval: ${OB_PACT_INTERVAL:240000}
+    pact-transaction-interval-second-scheduler: ${OB_PACT_INTERVAL_SECOND_SCHEDULER:3600000}
+    valid-until: 9999-12-31
+    ssl-certificate-path: ${COMMON_SSL_CERTIFICATE_PATH}
+    ssl-certificate-password: ${COMMON_SSL_CERTIFICATE_PASSWORD}
+    signature-certificate-path: ${COMMON_SIGNATURE_CERTIFICATE_PATH}
+    signature-certificate-password: ${COMMON_SIGNATURE_CERTIFICATE_PASSWORD}
+    test-ssl-certificate-path: ${TEST_COMMON_SSL_CERTIFICATE_PATH}
+    test-ssl-certificate-password: ${TEST_COMMON_SSL_CERTIFICATE_PASSWORD}
+    test-signature-certificate-path: ${TEST_COMMON_SIGNATURE_CERTIFICATE_PATH}
+    test-signature-certificate-password: ${TEST_COMMON_SIGNATURE_CERTIFICATE_PASSWORD}
+    bog:
+      ssl-certificate-path: ${BOG_SSL_CERTIFICATE_PATH}
+      ssl-certificate-password: ${BOG_SSL_CERTIFICATE_PASSWORD}
+      signature-certificate-path: ${BOG_SIGNATURE_CERTIFICATE_PATH}
+      signature-certificate-password: ${BOG_SIGNATURE_CERTIFICATE_PASSWORD}
+    tbc:
+      ssl-certificate-path: ${TBC_SSL_CERTIFICATE_PATH}
+      ssl-certificate-password: ${TBC_SSL_CERTIFICATE_PASSWORD}
+      signature-certificate-path: ${TBC_SIGNATURE_CERTIFICATE_PATH}
+      signature-certificate-password: ${TBC_SIGNATURE_CERTIFICATE_PASSWORD}
+  integrator:
+    qr:
+      base-url: ${QR_BASE_URL}
+    order:
+      expires-in-seconds: 300
+  default-dynamic:
+    time-to-live: 480
+    time-to-valid: 300
+    gpost:
+      time-to-live: 900
+  default-dynamic-softpos:
+    time-to-live: 120
+    time-to-valid: 60
+    gpost:
+      time-to-live: 900
+
+  split:
+    max-split-accounts: 3
+  rate:
+    euro: 3
+    dollar: 3
+  currency-rate-url: ${NBG_CURRENCY_URL:https://nbg.gov.ge/gw/api/ct/monetarypolicy/currencies/ka/json/}
+  bog-currency-rate-url: ${BOG_CURRENCY_URL:https://api.businessonline.ge/api/rates/nbg/}
+  use-nbg-for-currencies: true
+
+  sipay:
+    app-key: ${SIPAY_APP_KEY}
+    app-secret: ${SIPAY_APP_SECRET}
+    base-url: ${SIPAY_BASE_URL}
+    merchant-key: ${SIPAY_MERCHANT_KEY}
+    fail-url: ${SIPAY_FAIL_URL}
+    success-url: ${SIPAY_SUCCESS_URL}
+    sale-web-hook-key: ${SIPAY_PAYMENT_WEB_HOOK_KEY}
+    refund-web-hook-key: ${SIPAY_REFUND_WEB_HOOK_KEY}
+
+  mqtt:
+    greenwash:
+      broker_host: ${GREENWASH_BROKER_HOST}
+      broker_port: ${GREENWASH_BROKER_PORT}
+      client_id: ${GREENWASH_CLIENT_ID}
+      username: ${GREENWASH_USERNAME}
+      password: ${GREENWASH_PASSWORD}
+      heartbeat-interval-seconds: ${GREENWASH_HEARTBEAT_INTERVAL_SECONDS}
+      amount-size-per-message: ${GREENWASH_AMOUNT_SIZE_PER_MESSAGE}
+      delay-per-message: ${GREENWASH_DELAY_PER_MESSAGE}
+      pattern:
+        commands-general: ${GREENWASH_COMMANDS_GENERAL}
+        events-general: ${GREENWASH_EVENTS_GENERAL}
+        events-heartbeat: ${GREENWASH_EVENTS_HEARTBEAT}
+
+  ucc:
+    nci-service-uri: ${NCI_SERVICE_URI}
+    ucc-service-uri: ${UCC_SERVICE_URI}
+    encrypt-properties: ${UCC_ENCRYPT_PROPERTIES}
+    sign-properties: ${UCC_SIGN_PROPERTIES}
+  fina:
+    external-item:
+      secure-key: ${FINA_SECURED_KEY}
+      service-uri: ${FINA_SERVICE_URI}
+
+
+eureka:
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: ${EUREKA_HOST}
+  instance:
+    preferIpAddress: true
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'
+
