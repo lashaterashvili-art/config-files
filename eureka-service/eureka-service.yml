@@ -1,6 +1,5 @@
-
 server:
-  port: 8070
+  port: ${EUREKA_PORT}
 eureka:
   instance:
     hostname: ${EUREKA_HOSTNAME}
@@ -9,7 +8,7 @@ eureka:
     registerWithEureka: false
     fetchRegistry: false
     serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:8070/eureka/
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
   server:
     waitTimeInMsWhenSyncEmpty: 5
 
@@ -18,4 +17,3 @@ management:
     web:
       exposure:
         include: "*"
-
