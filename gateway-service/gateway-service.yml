@@ -119,7 +119,7 @@ eureka:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
-      defaultZone: ${EUREKA_HOST}
+      defaultZone: ${EUREKA_HOST}/eureka/
 management:
   endpoints:
     web:
