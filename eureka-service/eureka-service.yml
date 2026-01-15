@@ -1,23 +1,19 @@
 server:
-  port: ${EUREKA_PORT:8070}
-
-spring:
-  application:
-    name: eureka-service
-
+  port: ${EUREKA_PORT}
 eureka:
+  instance:
+    hostname: ${EUREKA_HOSTNAME}
+    ip-address: ${EUREKA_HOSTNAME}
   client:
-    register-with-eureka: false
-    fetch-registry: false
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: ${EUREKA_HOST}/eureka/
   server:
-    enable-self-preservation: false
+    waitTimeInMsWhenSyncEmpty: 5
 
 management:
   endpoints:
     web:
       exposure:
-        include: health,info
-  endpoint:
-    health:
-      show-details: always
-
+        include: "*"
